@@ -20,6 +20,10 @@ export const colors = {
   barInProgress: 'rgba(247,237,216,0.3)',
   /** The ring around the camera shutter. */
   shutterRing: 'rgba(247,237,216,0.22)',
+  /** Scrim behind a system-style alert. The handoff specifies 55%. */
+  scrim: 'rgba(0,0,0,0.55)',
+  /** iOS dark-mode alert surface — a platform colour, not a brand one. */
+  iosAlert: '#1C1C1E',
 } as const;
 
 /**

@@ -1,6 +1,7 @@
 export const RING = {
   calories: { size: 120, r: 50, strokeWidth: 12, circumference: 314 },
   macro: { size: 52, r: 21, strokeWidth: 7, circumference: 132 },
+  planReady: { size: 100, r: 42, strokeWidth: 11, circumference: 264 },
 } as const;
 
 /**

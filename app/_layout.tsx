@@ -1,6 +1,9 @@
-import { Stack } from 'expo-router';
+import { Stack, useRouter, useSegments } from 'expo-router';
 import { StatusBar } from 'expo-status-bar';
+import { useEffect, useState } from 'react';
 import { View } from 'react-native';
+import { shouldShowOnboarding } from '../src/logic/gate';
+import { useAppStore } from '../src/state/useAppStore';
 import { colors } from '../src/theme/tokens';
 import { useAppFonts } from '../src/theme/useFonts';
 
@@ -9,10 +12,31 @@ const PUSH_MS = 320;
 
 export default function RootLayout() {
   const fontsReady = useAppFonts();
+  const router = useRouter();
+  const segments = useSegments();
+
+  const showOnboarding = useAppStore(shouldShowOnboarding);
+
+  // Wait for AsyncStorage to rehydrate before routing, or a returning user
+  // flashes the funnel on every cold start.
+  const [hydrated, setHydrated] = useState(() => useAppStore.persist.hasHydrated());
+
+  useEffect(() => {
+    const unsub = useAppStore.persist.onFinishHydration(() => setHydrated(true));
+    return unsub;
+  }, []);
+
+  useEffect(() => {
+    if (!hydrated || !fontsReady) return;
+    const inOnboarding = segments[0] === '(onboarding)';
+    if (showOnboarding && !inOnboarding) {
+      router.replace('/(onboarding)/01-scan');
+    }
+  }, [hydrated, fontsReady, showOnboarding, segments, router]);
 
   // Hold on the app background rather than flashing unstyled text — every
   // number in this app is set in Archivo, so unstyled fallbacks are jarring.
-  if (!fontsReady) return <View style={{ flex: 1, backgroundColor: colors.pot }} />;
+  if (!fontsReady || !hydrated) return <View style={{ flex: 1, backgroundColor: colors.pot }} />;
 
   return (
     <>
@@ -25,6 +49,7 @@ export default function RootLayout() {
           animationDuration: PUSH_MS,
         }}
       >
+        <Stack.Screen name="(onboarding)" options={{ animation: 'fade' }} />
         <Stack.Screen name="(tabs)" options={{ animation: 'fade' }} />
         <Stack.Screen name="scan" />
         <Stack.Screen name="detect" />

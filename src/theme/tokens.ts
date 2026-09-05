@@ -13,6 +13,13 @@ export const colors = {
   plate: '#EFECE1',
   ringTrack: 'rgba(247,237,216,0.12)',
   tabInactive: 'rgba(247,237,216,0.45)',
+  /** Stepper increment button — a bonnet-tinted fill rather than a solid one. */
+  bonnetFill: 'rgba(242,76,30,0.2)',
+  bonnetFillBorder: 'rgba(242,76,30,0.45)',
+  /** Today's diary bar, which is still in progress and so reads as neutral. */
+  barInProgress: 'rgba(247,237,216,0.3)',
+  /** The ring around the camera shutter. */
+  shutterRing: 'rgba(247,237,216,0.22)',
 } as const;
 
 /**

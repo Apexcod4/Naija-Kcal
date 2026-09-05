@@ -58,9 +58,9 @@ export default function Stepper({ value, label, onStep }: Props) {
           borderRadius: SIZE / 2,
           alignItems: 'center',
           justifyContent: 'center',
-          backgroundColor: 'rgba(242,76,30,0.2)',
+          backgroundColor: colors.bonnetFill,
           borderWidth: 1,
-          borderColor: 'rgba(242,76,30,0.45)',
+          borderColor: colors.bonnetFillBorder,
         }}
       >
         <Text style={{ color: colors.bonnet, fontSize: 20, lineHeight: 22 }}>+</Text>

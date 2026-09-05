@@ -1,7 +1,7 @@
 import { fireEvent, within } from '@testing-library/react-native';
-import { renderScreen } from '../src/test-utils';
-import Portion from './portion';
-import { useAppStore } from '../src/state/useAppStore';
+import { renderScreen } from '../test-utils';
+import Portion from '../../app/portion';
+import { useAppStore } from '../state/useAppStore';
 
 jest.mock('expo-router', () => ({
   useRouter: () => ({ back: jest.fn(), dismissAll: jest.fn(), replace: jest.fn(), push: jest.fn() }),

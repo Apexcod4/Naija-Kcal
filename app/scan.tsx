@@ -125,7 +125,7 @@ export default function Scan() {
             borderRadius: 41,
             backgroundColor: colors.bonnet,
             borderWidth: 5,
-            borderColor: 'rgba(247,237,216,0.22)',
+            borderColor: colors.shutterRing,
           }}
         />
 

@@ -19,7 +19,7 @@ export default function WeekChart({ values, target, todayIndex }: Props) {
         const pct = barHeightPct(v, target);
         const inProgress = i === todayIndex;
         const colour = inProgress
-          ? 'rgba(247,237,216,0.3)'
+          ? colors.barInProgress
           : v > target
             ? colors.bonnet
             : colors.ugu;

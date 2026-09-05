@@ -11,7 +11,8 @@
     "backgroundColor": "#0C0D0A",
     "plugins": [
       "expo-router",
-      "expo-font"
+      "expo-font",
+      "expo-splash-screen"
     ],
     "experiments": {
       "typedRoutes": true

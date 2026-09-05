@@ -1,0 +1,70 @@
+import { Pressable, Text, View } from 'react-native';
+import { MAX_UNITS, MIN_UNITS, STEP } from '../logic/portion';
+import { colors, material } from '../theme/tokens';
+import { type as t } from '../theme/typography';
+
+const SIZE = 34;
+/** 34 visual + 5 each side = a 44px target, without changing the visual size. */
+const SLOP = { top: 5, bottom: 5, left: 5, right: 5 };
+
+type Props = {
+  value: number;
+  /** Pre-formatted display string, e.g. "1½". */
+  label: string;
+  onStep: (delta: number) => void;
+};
+
+export default function Stepper({ value, label, onStep }: Props) {
+  return (
+    <View style={{ flexDirection: 'row', alignItems: 'center', gap: 10 }}>
+      <Pressable
+        testID="stepper-minus"
+        hitSlop={SLOP}
+        accessibilityRole="button"
+        accessibilityLabel="Decrease"
+        onPress={() => onStep(-STEP)}
+        style={{
+          width: SIZE,
+          height: SIZE,
+          borderRadius: SIZE / 2,
+          alignItems: 'center',
+          justifyContent: 'center',
+          backgroundColor: material.glass.backgroundColor,
+          borderWidth: material.glass.borderWidth,
+          borderColor: material.glass.borderColor,
+        }}
+      >
+        <Text style={{ color: colors.cream, fontSize: 20, lineHeight: 22 }}>−</Text>
+      </Pressable>
+
+      <Text
+        accessibilityLiveRegion="polite"
+        accessibilityValue={{ now: value, min: MIN_UNITS, max: MAX_UNITS, text: label }}
+        maxFontSizeMultiplier={1.6}
+        style={[t.metric, { fontSize: 19, minWidth: 56, textAlign: 'center' }]}
+      >
+        {label}
+      </Text>
+
+      <Pressable
+        testID="stepper-plus"
+        hitSlop={SLOP}
+        accessibilityRole="button"
+        accessibilityLabel="Increase"
+        onPress={() => onStep(STEP)}
+        style={{
+          width: SIZE,
+          height: SIZE,
+          borderRadius: SIZE / 2,
+          alignItems: 'center',
+          justifyContent: 'center',
+          backgroundColor: 'rgba(242,76,30,0.2)',
+          borderWidth: 1,
+          borderColor: 'rgba(242,76,30,0.45)',
+        }}
+      >
+        <Text style={{ color: colors.bonnet, fontSize: 20, lineHeight: 22 }}>+</Text>
+      </Pressable>
+    </View>
+  );
+}

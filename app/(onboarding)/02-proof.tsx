@@ -4,7 +4,7 @@ import FoodTile from '../../src/components/FoodTile';
 import GlassCard from '../../src/components/GlassCard';
 import OnboardingScreen from '../../src/components/onboarding/OnboardingScreen';
 import PrimaryButton from '../../src/components/onboarding/PrimaryButton';
-import { DETECTED_PAIR } from '../../src/data/detectedPair';
+import { SCANNED_PAIR } from '../../src/data/detectedPair';
 import { colors, radii, space } from '../../src/theme/tokens';
 import { fonts, type as t } from '../../src/theme/typography';
 
@@ -26,7 +26,7 @@ const SPECS = [
  */
 export default function Proof() {
   const router = useRouter();
-  const [soup, swallow] = DETECTED_PAIR;
+  const { soup, swallow } = SCANNED_PAIR;
 
   return (
     <OnboardingScreen

@@ -53,6 +53,8 @@ export default function RootLayout() {
         <Stack.Screen name="(tabs)" options={{ animation: 'fade' }} />
         <Stack.Screen name="scan" />
         <Stack.Screen name="detect" />
+        <Stack.Screen name="library" />
+        <Stack.Screen name="dish/[id]" />
         {/* Portion rises as a sheet over Detect rather than pushing laterally. */}
         <Stack.Screen
           name="portion"

@@ -132,7 +132,12 @@ export default function Scan() {
           }}
         />
 
-        <PressableScale accessibilityRole="button" accessibilityLabel="Search the library" style={tile}>
+        <PressableScale
+          accessibilityRole="button"
+          accessibilityLabel="Search the library"
+          onPress={() => router.push('/library')}
+          style={tile}
+        >
           <SearchIcon color={colors.cream} />
         </PressableScale>
       </View>

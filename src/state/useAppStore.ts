@@ -1,9 +1,9 @@
 import { create } from 'zustand';
 import { persist } from 'zustand/middleware';
+import { SCANNED_PAIR } from '../data/detectedPair';
 import { DEFAULT_PROFILE, SEED_MEALS } from '../data/seed';
 import { computePair, formatUnit, shareLabel, stepUnit } from '../logic/portion';
-import { food } from '../theme/tokens';
-import { Meal, PortionDraft, Profile, Share } from '../types';
+import { Dish, DishPair, Meal, PortionDraft, Profile, Share } from '../types';
 import { appStorage } from './storage';
 
 const INITIAL_DRAFT: PortionDraft = { wraps: 1, ladles: 1, share: 100 };
@@ -15,6 +15,7 @@ type AppState = {
   meals: Meal[];
   draft: PortionDraft;
   toast: Toast;
+  currentPair: DishPair;
   onboardingComplete: boolean;
 
   setWraps: (n: number) => void;
@@ -22,6 +23,8 @@ type AppState = {
   stepWraps: (delta: number) => void;
   stepLadles: (delta: number) => void;
   setShare: (s: Share) => void;
+  setPair: (pair: DishPair) => void;
+  buildLibraryPair: (soup: Dish, swallow: Dish) => void;
   setHouseholdSize: (n: number) => void;
   setProfile: (patch: Partial<Profile>) => void;
   resetDraft: () => void;
@@ -43,6 +46,7 @@ export const useAppStore = create<AppState>()(
       meals: SEED_MEALS,
       draft: INITIAL_DRAFT,
       toast: null,
+      currentPair: SCANNED_PAIR,
       onboardingComplete: false,
 
       setWraps: (n) => set((s) => ({ draft: { ...s.draft, wraps: clamp(n) } })),
@@ -50,6 +54,12 @@ export const useAppStore = create<AppState>()(
       stepWraps: (d) => set((s) => ({ draft: { ...s.draft, wraps: stepUnit(s.draft.wraps, d) } })),
       stepLadles: (d) => set((s) => ({ draft: { ...s.draft, ladles: stepUnit(s.draft.ladles, d) } })),
       setShare: (share) => set((s) => ({ draft: { ...s.draft, share } })),
+
+      setPair: (currentPair) => set({ currentPair, draft: INITIAL_DRAFT }),
+
+      /** A pair assembled by hand in the library rather than recognised. */
+      buildLibraryPair: (soup, swallow) =>
+        set({ currentPair: { soup, swallow, source: 'library' }, draft: INITIAL_DRAFT }),
 
       setHouseholdSize: (n) => set((s) => ({ profile: { ...s.profile, householdSize: n } })),
       setProfile: (patch) => set((s) => ({ profile: { ...s.profile, ...patch } })),
@@ -60,8 +70,20 @@ export const useAppStore = create<AppState>()(
       sharePromptVisible: () => get().profile.householdSize > 1,
 
       logPair: () => {
-        const { draft, meals } = get();
-        const totals = computePair(draft.wraps, draft.ladles, draft.share);
+        const { draft, meals, currentPair } = get();
+        const { soup, swallow } = currentPair;
+
+        // Rates come from the pair itself, so logging egusi with eba prices
+        // eba's 340 rather than a generic swallow constant.
+        const totals = computePair(draft.wraps, draft.ladles, draft.share, {
+          swallow: {
+            kcal: swallow.kcal,
+            carbs: swallow.carbs,
+            protein: swallow.protein,
+            fat: swallow.fat,
+          },
+          ladle: { kcal: soup.kcal, carbs: soup.carbs, protein: soup.protein, fat: soup.fat },
+        });
         const now = new Date();
         const time = `${String(now.getHours()).padStart(2, '0')}:${String(now.getMinutes()).padStart(2, '0')}`;
 
@@ -72,10 +94,10 @@ export const useAppStore = create<AppState>()(
 
         const meal: Meal = {
           id: `meal-${now.getTime()}`,
-          name: 'Egusi & pounded yam',
+          name: `${soup.name} & ${swallow.name.toLowerCase()}`,
           unitString,
           ...totals,
-          colour: food.egusi,
+          colour: soup.colour,
           time,
         };
 
@@ -98,6 +120,7 @@ export const useAppStore = create<AppState>()(
           draft: INITIAL_DRAFT,
           toast: null,
           onboardingComplete: false,
+          currentPair: SCANNED_PAIR,
         }),
     }),
     {

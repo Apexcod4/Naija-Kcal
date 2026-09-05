@@ -7,7 +7,7 @@ with placeholder copy marked `TODO(design)` in the source.
 | State | Where | What is needed |
 |---|---|---|
 | Low-confidence recognition (<70%) | `app/detect.tsx` | Copy for an uncertain match, and whether the CTA changes. |
-| Dish not found | not yet routed | Copy, and whether it routes to the library or to manual entry. |
+| Dish not found | `app/library.tsx`, `app/dish/[id].tsx` | Empty-search and unknown-id copy. Both now have structure and a TODO. |
 | Camera permission denied | `app/scan.tsx` | Copy for the denied state and the re-request affordance. |
 | No meals logged today | `app/(tabs)/index.tsx` | Empty-state copy for the Today list. |
 | Over-target day | `app/(tabs)/index.tsx` | Whether the ring, the number, or neither changes treatment. |
@@ -41,6 +41,32 @@ Also unspecified and currently placeholder:
 - **Example day** on screen 07 uses the handoff's akara/jollof/egusi trio
   regardless of the computed target; only the "to spare" figure is derived.
 
+## Dish library — the dataset is provisional and must be replaced
+
+The handoff specifies **~340 dishes on device**. The design file supplies
+roughly **eight**. `src/data/dishes.ts` currently holds **26**, of which **6** carry verified figures.
+
+**Five soups carry the designer's own kcal figures** and are marked
+`verified: true`: Egusi 290, Efo riro 240, Ogbono 265, Ewedu & gbegiri 185,
+Banga 330 (all per 180 ml ladle). Pounded yam's 320 per wrap matches the
+handoff's portion maths. **Every other number in that file is an estimate**
+and is marked `verified: false`.
+
+This matters more than usual here: the handoff names people managing blood
+sugar and blood pressure as a target audience, and presenting invented carb
+and calorie values to that audience as fact would be harmful. The UI
+therefore labels unverified rows with an "estimate" tag in the list and a
+`palm`-tinted warning card on the detail screen.
+
+**What is needed:** a real 340-row dataset — name, category, unit, per-unit
+kcal and macros, typical pairings, photo. Replacing `src/data/dishes.ts`
+requires no UI changes.
+
+Related: the search placeholder reads **"Search 26 dishes — works offline"**,
+deriving the count from the table rather than hardcoding the design's "340",
+so the app never claims a catalogue it does not ship. It will read 340
+automatically once the real data lands.
+
 ## Other open questions
 
 1. **`pidginCopy`** — the mock carries an undocumented prop that swaps the scan
@@ -55,9 +81,9 @@ Also unspecified and currently placeholder:
    implemented in phase 1.
 4. **Diary history** — the week chart's non-today columns are seeded constants.
    A real per-day store is needed before this screen is truthful.
-5. **Logged meal identity** — every logged pair is currently named "Egusi &
-   pounded yam", inherited from the mock. Real naming depends on the
-   recognition model, which is out of phase 1.
+5. **Logged meal identity** — RESOLVED. Logged pairs now take their name from
+   the pair itself, so a library-built egusi and eba logs as "Egusi & eba".
+   Only the scanned pair is still fixed, pending the recognition model.
 
 ## Deviations from the mock (deliberate, already implemented)
 

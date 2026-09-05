@@ -7,7 +7,7 @@ import FoodTile from '../src/components/FoodTile';
 import GlassCard from '../src/components/GlassCard';
 import RollingNumber from '../src/components/RollingNumber';
 import Stepper from '../src/components/Stepper';
-import { DETECTED_PAIR } from '../src/data/detectedPair';
+
 import { barWidths, computePair, formatUnit, shareNote } from '../src/logic/portion';
 import { useAppStore } from '../src/state/useAppStore';
 import { colors, radii, space, tint } from '../src/theme/tokens';
@@ -39,7 +39,7 @@ export default function Portion() {
   const totals = computePair(draft.wraps, draft.ladles, draft.share);
   const bars = barWidths(totals);
 
-  const [soup, swallow] = DETECTED_PAIR;
+  const { soup, swallow } = useAppStore((s) => s.currentPair);
 
   const onLog = () => {
     logPair();

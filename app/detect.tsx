@@ -8,8 +8,9 @@ import FoodTile from '../src/components/FoodTile';
 import GlassCard from '../src/components/GlassCard';
 import StatusCard from '../src/components/StatusCard';
 import { BackIcon } from '../src/components/icons';
-import { DETECTED_PAIR, LOW_CONFIDENCE_THRESHOLD } from '../src/data/detectedPair';
-import { colors, food, material, radii, space } from '../src/theme/tokens';
+import { LOW_CONFIDENCE_THRESHOLD } from '../src/data/detectedPair';
+import { useAppStore } from '../src/state/useAppStore';
+import { colors, material, radii, space } from '../src/theme/tokens';
 import { type as t } from '../src/theme/typography';
 
 const PHOTO_H = 326;
@@ -20,7 +21,16 @@ export default function Detect() {
   const router = useRouter();
   const insets = useSafeAreaInsets();
 
-  const lowConfidence = DETECTED_PAIR.some((d) => d.confidence < LOW_CONFIDENCE_THRESHOLD);
+  const pair = useAppStore((s) => s.currentPair);
+
+  const items = [
+    { dish: pair.soup, confidence: pair.confidence?.soup },
+    { dish: pair.swallow, confidence: pair.confidence?.swallow },
+  ];
+
+  const lowConfidence = items.some(
+    (i) => i.confidence !== undefined && i.confidence < LOW_CONFIDENCE_THRESHOLD
+  );
 
   return (
     <View style={{ flex: 1, backgroundColor: colors.pot }}>
@@ -32,7 +42,7 @@ export default function Detect() {
           left: 0,
           right: 0,
           height: PHOTO_H,
-          backgroundColor: food.egusi,
+          backgroundColor: pair.soup.colour,
         }}
       />
       <LinearGradient
@@ -73,27 +83,35 @@ export default function Detect() {
         }}
       >
         <View>
-          <Text style={[t.eyebrow, { color: colors.bonnet }]}>Recognised as a pair</Text>
-          <Text style={[t.detectTitle, { marginTop: 8 }]}>Egusi soup{'\n'}and pounded yam</Text>
+          <Text style={[t.eyebrow, { color: colors.bonnet }]}>
+            {pair.source === 'scan' ? 'Recognised as a pair' : 'Built as a pair'}
+          </Text>
+          <Text style={[t.detectTitle, { marginTop: 8 }]}>
+            {pair.soup.name}
+            {'\n'}and {pair.swallow.name.toLowerCase()}
+          </Text>
         </View>
 
         <GlassCard radius={radii.card}>
           <View style={{ paddingHorizontal: 16 }}>
-            {DETECTED_PAIR.map((item, i) => (
+            {items.map((item, i) => (
               <Animated.View
-                key={item.name}
+                key={item.dish.id}
                 entering={FadeInUp.delay(i * ROW_STAGGER_MS).duration(280)}
               >
                 {i > 0 ? <View style={{ height: 1, backgroundColor: colors.line }} /> : null}
                 <View
                   style={{ flexDirection: 'row', alignItems: 'center', gap: 12, paddingVertical: 14 }}
                 >
-                  <FoodTile colour={item.colour} size={34} plate={false} />
+                  <FoodTile colour={item.dish.colour} size={34} plate={false} />
                   <View style={{ flex: 1 }}>
-                    <Text style={t.rowTitle}>{item.name}</Text>
-                    <Text style={[t.rowMeta, { marginTop: 2 }]}>{item.ingredients}</Text>
+                    <Text style={t.rowTitle}>{item.dish.name}</Text>
+                    <Text style={[t.rowMeta, { marginTop: 2 }]}>{item.dish.ingredients}</Text>
                   </View>
-                  <Text style={[t.rowMeta, { color: colors.uguText }]}>{item.confidence}%</Text>
+                  {/* A hand-built pair has no confidence to report. */}
+                  {item.confidence !== undefined ? (
+                    <Text style={[t.rowMeta, { color: colors.uguText }]}>{item.confidence}%</Text>
+                  ) : null}
                 </View>
               </Animated.View>
             ))}
@@ -115,10 +133,17 @@ export default function Detect() {
           </Text>
         </StatusCard>
 
-        <Text style={t.body}>
-          Not right?{' '}
-          <Text style={{ color: colors.bonnet }}>Search the library</Text>
-        </Text>
+        <PressableScale
+          accessibilityRole="button"
+          accessibilityLabel="Not right? Search the library"
+          onPress={() => router.push('/library')}
+          hitSlop={8}
+          scaleTo={0.99}
+        >
+          <Text style={t.body}>
+            Not right? <Text style={{ color: colors.bonnet }}>Search the library</Text>
+          </Text>
+        </PressableScale>
       </ScrollView>
 
       <View

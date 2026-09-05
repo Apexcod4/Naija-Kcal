@@ -67,3 +67,41 @@ export type PortionDraft = {
   ladles: number;
   share: Share;
 };
+
+export type DishCategory = 'soup' | 'swallow' | 'rice' | 'street' | 'caribbean';
+export type DishUnit = 'ladle' | 'wrap' | 'derica' | 'piece' | 'plate';
+
+export type Dish = {
+  id: string;
+  name: string;
+  category: DishCategory;
+  /** The local unit this dish is measured in. */
+  unit: DishUnit;
+  /** Display string for the unit, e.g. "Per ladle · 180 ml". */
+  unitLabel: string;
+  /** Per one unit. */
+  kcal: number;
+  carbs: number;
+  protein: number;
+  fat: number;
+  colour: string;
+  photoUri?: string;
+  ingredients?: string;
+  /** Dish ids commonly eaten with this one — how a pair is built by hand. */
+  pairsWith?: string[];
+  /**
+   * True only when the kcal figure comes from the design handoff. False means
+   * the number is a provisional estimate and must not be presented as fact.
+   */
+  verified: boolean;
+};
+
+/** A soup + swallow pair, however it was assembled. */
+export type DishPair = {
+  soup: Dish;
+  swallow: Dish;
+  /** Where the pair came from — a scan, or built by hand in the library. */
+  source: 'scan' | 'library';
+  /** Recognition confidence per item, present only for scans. */
+  confidence?: { soup: number; swallow: number };
+};

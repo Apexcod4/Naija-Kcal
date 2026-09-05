@@ -1,3 +1,4 @@
+import { dishById } from '../data/dishes';
 import { useAppStore } from './useAppStore';
 
 beforeEach(() => useAppStore.getState().resetAll());
@@ -78,4 +79,34 @@ test('calibrated units feed the portion maths', () => {
   const p = useAppStore.getState().profile;
   expect(p.wrapGrams).toBe(300);
   expect(p.ladleMl).toBe(250);
+});
+
+describe('pair source', () => {
+  test('defaults to the scanned pair', () => {
+    expect(useAppStore.getState().currentPair.source).toBe('scan');
+    expect(useAppStore.getState().currentPair.soup.id).toBe('egusi');
+  });
+
+  test('a library-built pair prices its own dishes, not the generic rates', () => {
+    const egusi = dishById('egusi')!;   // 290 per ladle
+    const eba = dishById('eba')!;       // 340 per wrap — not the generic 320
+    useAppStore.getState().buildLibraryPair(egusi, eba);
+    useAppStore.getState().logPair();
+
+    const last = useAppStore.getState().meals.at(-1)!;
+    expect(last.kcal).toBe(630); // 340 + 290, not 610
+    expect(last.name).toBe('Egusi & eba');
+  });
+
+  test('building a pair resets the portion draft', () => {
+    useAppStore.getState().setWraps(3);
+    useAppStore.getState().buildLibraryPair(dishById('banga')!, dishById('fufu')!);
+    expect(useAppStore.getState().draft.wraps).toBe(1);
+  });
+
+  test('a library pair carries no confidence scores', () => {
+    useAppStore.getState().buildLibraryPair(dishById('okra')!, dishById('semo')!);
+    expect(useAppStore.getState().currentPair.confidence).toBeUndefined();
+    expect(useAppStore.getState().currentPair.source).toBe('library');
+  });
 });

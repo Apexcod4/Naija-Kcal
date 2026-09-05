@@ -67,6 +67,38 @@ deriving the count from the table rather than hardcoding the design's "340",
 so the app never claims a catalogue it does not ship. It will read 340
 automatically once the real data lands.
 
+## Logging input methods — two of four are blocked on a native build
+
+Competitive input (Amy, a shipping Nigerian-food tracker) offers four ways to
+log: type, voice, barcode and menu scan. Naija Kcal had camera and library
+only. Text and barcode are now built; the other two cannot be.
+
+| Method | State | Blocker |
+|---|---|---|
+| Type a meal | **Built** | — |
+| Barcode | **Built** (scan works; lookup does not) | No barcode-to-product table ships. The free online ones are network calls, which would break the "0 MB per scan" claim screen 02 makes. Unrecognised codes say so rather than reaching for the network. |
+| Voice | Slot visible, disabled | `expo-speech-recognition` is a native module Expo Go does not bundle. Enabling it ends on-device testing until an EAS build exists. |
+| Menu scan | Slot visible, disabled | Needs OCR (ML Kit or cloud) plus the buka price dataset, already deferred. |
+
+**Design question raised by this work:** the bottom of the home screen now
+carries three floating objects — the nav pill, the `bonnet` scan FAB, and the
+input bar — consuming roughly 160px of a 852px screen. The handoff is explicit
+that the pill/FAB split is intentional ("logging is not a fourth tab"), but it
+was written before a text input existed. The input bar's own scan button was
+removed to avoid duplicating the FAB, but the crowding is a visual judgment
+that needs a look on a real device.
+
+**Worth stealing from Amy:** it shows a per-estimate confidence score and its
+sourcing ("Confidence level 65 · Moderate — I searched for Nigerian yam and
+stew nutrition and found research papers"). That is a better answer to the
+provisional-data problem than this build's binary `verified` flag, because it
+tells the user *how* uncertain a number is rather than merely that it is.
+
+**Worth noting about Amy:** it logs Nigerian food in **cups** ("Boiled Yam
+(1.5 cups)", "Tomato-based Stew (0.5 cup)") and never asks what share of a
+shared bowl was the user's. The dish recognition is ahead of ours; the unit
+model is the gap this product exists to fill.
+
 ## Other open questions
 
 1. **`pidginCopy`** — the mock carries an undocumented prop that swaps the scan

@@ -1,4 +1,4 @@
-import { useRouter } from 'expo-router';
+import { useLocalSearchParams, useRouter } from 'expo-router';
 import { useMemo, useState } from 'react';
 import { ScrollView, Text, TextInput, View } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
@@ -32,7 +32,8 @@ export default function Library() {
   const router = useRouter();
   const insets = useSafeAreaInsets();
 
-  const [query, setQuery] = useState('');
+  const { q } = useLocalSearchParams<{ q?: string }>();
+  const [query, setQuery] = useState(q ?? '');
   const [category, setCategory] = useState<CategoryFilter>('all');
 
   const results = useMemo(() => searchDishes(DISHES, query, category), [query, category]);

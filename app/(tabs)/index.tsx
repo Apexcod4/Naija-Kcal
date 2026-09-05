@@ -1,3 +1,8 @@
+import { useRouter } from 'expo-router';
+import LogInputBar from '../../src/components/LogInputBar';
+import { DISHES } from '../../src/data/dishes';
+import { routeForMatch } from '../../src/logic/logRoute';
+import { matchPair } from '../../src/logic/matchPair';
 import { useMemo } from 'react';
 import { ScrollView, Text, View } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
@@ -20,11 +25,27 @@ function mondayFirstIndex(d: Date): number {
 
 export default function Home() {
   const insets = useSafeAreaInsets();
+  const router = useRouter();
 
   const meals = useAppStore((s) => s.meals);
   const profile = useAppStore((s) => s.profile);
   const toast = useAppStore((s) => s.toast);
   const hideToast = useAppStore((s) => s.hideToast);
+  const buildLibraryPair = useAppStore((s) => s.buildLibraryPair);
+
+  /** Typed meals resolve into the same pair-and-units flow as a scan. */
+  const onSubmitText = (text: string) => {
+    const route = routeForMatch(matchPair(text, DISHES));
+
+    if (route.action === 'portion') {
+      buildLibraryPair(route.soup, route.swallow);
+      router.push('/portion');
+    } else if (route.action === 'dish') {
+      router.push({ pathname: '/dish/[id]', params: { id: route.id } });
+    } else {
+      router.push({ pathname: '/library', params: { q: route.query } });
+    }
+  };
 
   const consumed = useMemo(() => sumMeals(meals), [meals]);
 
@@ -47,7 +68,7 @@ export default function Home() {
         contentContainerStyle={{
           paddingTop: insets.top + 8,
           paddingHorizontal: space.gutter,
-          paddingBottom: 140,
+          paddingBottom: 200,
           gap: space.sectionGap,
         }}
       >
@@ -89,8 +110,23 @@ export default function Home() {
         </View>
       </ScrollView>
 
-      <ScrollFade />
-      <Toast message={toast?.message ?? null} onHide={hideToast} />
+      <ScrollFade height={200} />
+
+      <View
+        style={{
+          position: 'absolute',
+          left: space.gutter,
+          right: space.gutter,
+          bottom: 100,
+        }}
+      >
+        <LogInputBar
+          onSubmitText={onSubmitText}
+          onBarcode={() => router.push('/barcode')}
+        />
+      </View>
+
+      <Toast message={toast?.message ?? null} onHide={hideToast} bottom={172} />
     </View>
   );
 }

@@ -58,3 +58,30 @@ export const SearchIcon = ({ color, size = 20 }: IconProps) => (
     <Path d="M16 16l4 4" stroke={color} {...stroke} strokeWidth={2.2} />
   </Svg>
 );
+
+export const MicIcon = ({ color, size = 20 }: IconProps) => (
+  <Svg width={size} height={size} viewBox="0 0 24 24">
+    <Path d="M12 3a2.5 2.5 0 0 1 2.5 2.5v6a2.5 2.5 0 0 1-5 0v-6A2.5 2.5 0 0 1 12 3z" stroke={color} {...stroke} />
+    <Path d="M5.5 11a6.5 6.5 0 0 0 13 0M12 17.5V21" stroke={color} {...stroke} />
+  </Svg>
+);
+
+export const BarcodeIcon = ({ color, size = 20 }: IconProps) => (
+  <Svg width={size} height={size} viewBox="0 0 24 24">
+    <Path d="M4 7V5a1 1 0 0 1 1-1h2M17 4h2a1 1 0 0 1 1 1v2M20 17v2a1 1 0 0 1-1 1h-2M7 20H5a1 1 0 0 1-1-1v-2" stroke={color} {...stroke} />
+    <Path d="M8 8v8M11 8v8M14 8v8M17 8v8" stroke={color} {...stroke} />
+  </Svg>
+);
+
+export const SendIcon = ({ color, size = 20 }: IconProps) => (
+  <Svg width={size} height={size} viewBox="0 0 24 24">
+    <Path d="M5 12h13M12 6l6 6-6 6" stroke={color} {...stroke} strokeWidth={2.2} />
+  </Svg>
+);
+
+export const MenuScanIcon = ({ color, size = 20 }: IconProps) => (
+  <Svg width={size} height={size} viewBox="0 0 24 24">
+    <Path d="M4 7V5a1 1 0 0 1 1-1h2M17 4h2a1 1 0 0 1 1 1v2M20 17v2a1 1 0 0 1-1 1h-2M7 20H5a1 1 0 0 1-1-1v-2" stroke={color} {...stroke} />
+    <Path d="M8 9h8M8 12h8M8 15h5" stroke={color} {...stroke} />
+  </Svg>
+);

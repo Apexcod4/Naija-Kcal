@@ -1,0 +1,793 @@
+<div id="nk26">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wght@600;700;800;900&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+<style>
+#nk26{
+  --pot:#0C0D0A; --el1:#17190F; --el2:#1F2216; --line:rgba(245,233,208,.13);
+  --bonnet:#F24C1E; --bonnetSoft:rgba(242,76,30,.16);
+  --cream:#F7EDD8; --muted:#8E9082; --ugu:#7FA650; --palm:#E8A33D; --sky:#6B84F2;
+  --disp:'Archivo',system-ui,sans-serif;
+  --ui:'Inter',-apple-system,BlinkMacSystemFont,system-ui,sans-serif;
+  background:#070805;color:var(--cream);font-family:var(--ui);padding:44px 34px 64px;
+  width:1311px;max-width:1311px;
+}
+#nk26 *{box-sizing:border-box;margin:0;padding:0}
+#nk26 h1{font-family:var(--disp);font-weight:900;font-size:36px;letter-spacing:-1.1px;color:var(--bonnet)}
+#nk26 .lede{color:var(--muted);font-size:15px;margin-top:10px;max-width:780px;line-height:1.55}
+#nk26 .flow{margin-top:50px}
+#nk26 .flow>h2{font-family:var(--disp);font-weight:800;font-size:12.5px;letter-spacing:2.4px;
+  color:var(--muted);text-transform:uppercase;padding-bottom:12px;border-bottom:1px solid var(--line)}
+#nk26 .flow>p{color:#63665A;font-size:13.5px;margin-top:10px;max-width:720px;line-height:1.5}
+/* IMPORT MODE — wrapping grid, no scroll containers. */
+#nk26 .rail{display:flex;flex-wrap:wrap;gap:32px;margin-top:24px;overflow:visible;padding-bottom:18px}
+#nk26 .slot{flex:0 0 393px;width:393px}
+#nk26 .cap{font-size:12.5px;font-weight:600;color:#63665A;margin-top:10px;text-align:center}
+
+#nk26 .ph{width:393px;height:852px;background:var(--pot);border-radius:46px;
+  position:relative;overflow:hidden;box-shadow:0 26px 64px rgba(0,0,0,.62),0 0 0 1px rgba(247,237,216,.09)}
+#nk26 .sb{display:flex;justify-content:space-between;padding:21px 32px 0;font-size:15px;font-weight:600;position:relative;z-index:5}
+#nk26 .sb i{width:17px;height:9px;border-radius:2px;background:var(--cream);opacity:.8;display:block;margin-top:4px}
+#nk26 .pad{padding:0 24px}
+#nk26 .home{position:absolute;bottom:9px;left:50%;transform:translateX(-50%);
+  width:134px;height:5px;border-radius:3px;background:rgba(247,237,216,.42);z-index:6}
+#nk26 .d{font-family:var(--disp);font-weight:900;letter-spacing:-.7px}
+
+/* ambient orange bloom so glass has something to refract */
+#nk26 .bloom{position:absolute;border-radius:50%;filter:blur(78px);opacity:.5;pointer-events:none}
+
+/* ============ LIQUID GLASS ============ */
+#nk26 .glass{
+  position:relative;
+  background:linear-gradient(145deg,rgba(247,237,216,.13),rgba(247,237,216,.05));
+  backdrop-filter:blur(26px) saturate(190%);
+  -webkit-backdrop-filter:blur(26px) saturate(190%);
+  border:.5px solid rgba(247,237,216,.2);
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.26),inset 0 -1px 0 rgba(0,0,0,.2),0 10px 34px rgba(0,0,0,.4);
+  overflow:hidden;
+}
+#nk26 .glass::after{
+  content:'';position:absolute;inset:0;pointer-events:none;border-radius:inherit;
+  background:linear-gradient(150deg,rgba(255,255,255,.2) 0%,rgba(255,255,255,0) 42%);
+}
+
+/* nav */
+#nk26 .nav{position:absolute;top:64px;left:24px;right:24px;display:flex;align-items:center;gap:12px;z-index:5}
+#nk26 .back{width:38px;height:38px;border-radius:19px;display:grid;place-items:center;
+  font-size:20px;font-weight:700;flex:0 0 38px}
+#nk26 .track{flex:1;height:7px;border-radius:4px;background:rgba(247,237,216,.1);overflow:hidden}
+#nk26 .track u{display:block;height:100%;background:var(--bonnet);border-radius:4px;text-decoration:none}
+
+/* headings */
+#nk26 .lt{font-family:var(--disp);font-weight:900;font-size:30px;line-height:1.14;letter-spacing:-.9px}
+#nk26 .sub{color:var(--muted);font-size:14.5px;margin-top:9px;line-height:1.45;font-weight:500}
+
+/* option rows */
+#nk26 .opt{display:flex;align-items:center;gap:13px;border-radius:22px;padding:16px 17px;margin-bottom:10px}
+#nk26 .opt .tx{flex:1}
+#nk26 .opt .tx b{display:block;font-size:16px;font-weight:650;letter-spacing:-.2px}
+#nk26 .opt .tx span{display:block;font-size:12.5px;color:var(--muted);margin-top:3px}
+#nk26 .opt.on{background:var(--bonnet);border-color:var(--bonnet);color:#180A04;
+  box-shadow:0 8px 26px rgba(242,76,30,.4),inset 0 1px 0 rgba(255,255,255,.3)}
+#nk26 .opt.on .tx span{color:rgba(24,10,4,.62)}
+#nk26 .opt .ic{width:34px;height:34px;border-radius:11px;background:rgba(247,237,216,.09);
+  display:grid;place-items:center;font-size:16px;flex:0 0 34px}
+#nk26 .opt.on .ic{background:rgba(24,10,4,.16)}
+
+/* capsule CTA — iOS 26 */
+#nk26 .cta{position:absolute;left:24px;right:24px;bottom:40px;height:56px;border-radius:28px;
+  background:var(--bonnet);color:#180A04;display:grid;place-items:center;
+  font-family:var(--disp);font-weight:800;font-size:17px;
+  box-shadow:0 10px 30px rgba(242,76,30,.42),inset 0 1px 0 rgba(255,255,255,.32);z-index:5}
+#nk26 .cta.glassy{background:linear-gradient(145deg,rgba(247,237,216,.16),rgba(247,237,216,.06));
+  color:var(--cream);box-shadow:inset 0 1px 0 rgba(255,255,255,.24),0 8px 24px rgba(0,0,0,.4)}
+
+/* tab bar — inset capsule */
+#nk26 .tabs{position:absolute;left:50%;transform:translateX(-50%);bottom:28px;
+  width:252px;height:64px;border-radius:32px;display:flex;align-items:center;z-index:6}
+#nk26 .tabs div{flex:1;text-align:center;font-size:10px;font-weight:600;color:rgba(247,237,216,.45)}
+#nk26 .tabs div.on{color:var(--bonnet)}
+#nk26 .tabs div u{display:block;font-size:18px;text-decoration:none;margin-bottom:2px}
+#nk26 .fab{position:absolute;right:22px;bottom:28px;width:64px;height:64px;border-radius:32px;
+  background:var(--bonnet);display:grid;place-items:center;font-size:30px;color:#180A04;font-weight:700;
+  box-shadow:0 10px 28px rgba(242,76,30,.5),inset 0 1px 0 rgba(255,255,255,.34);z-index:6}
+
+#nk26 .card{border-radius:26px;padding:19px}
+#nk26 .chip{border-radius:100px;padding:8px 13px;font-size:13.5px;font-weight:600;display:inline-block}
+#nk26 .eyebrow{font-size:11px;font-weight:700;letter-spacing:1.8px;color:var(--muted);text-transform:uppercase}
+
+/* plate */
+#nk26 .plate{width:var(--s,230px);height:var(--s,230px);border-radius:50%;background:#EFECE1;
+  position:relative;box-shadow:0 20px 46px rgba(0,0,0,.55)}
+#nk26 .plate i{position:absolute;border-radius:50%;display:block}
+#nk26 .r1{width:78%;height:76%;left:11%;top:12%;background:#C9451D}
+#nk26 .r2{width:56%;height:52%;left:21%;top:19%;background:#E15D27}
+#nk26 .gr{width:18%;height:12%;left:40%;top:20%;background:#556F35}
+#nk26 .ck{position:absolute;width:40%;height:27%;left:54%;top:55%;border-radius:30px;background:#9D6025;transform:rotate(-14deg)}
+#nk26 .pt{position:absolute;width:30%;height:13%;left:13%;top:66%;border-radius:20px;background:#EBA740;transform:rotate(10deg)}
+
+#nk26 .mb .t{display:flex;justify-content:space-between;align-items:baseline}
+#nk26 .mb .t em{font-style:normal;font-size:13px;color:var(--muted);font-weight:500}
+#nk26 .mb .t b{font-size:13.5px;font-weight:700}
+#nk26 .mb .bar{height:7px;border-radius:4px;background:rgba(247,237,216,.11);margin-top:7px;overflow:hidden}
+#nk26 .mb .bar u{display:block;height:100%;border-radius:4px;text-decoration:none}
+#nk26 .mb+.mb{margin-top:13px}
+</style>
+
+<h1>NAIJA KCAL — iOS 26 LIQUID GLASS</h1>
+<p class="lede">Cal AI's actual flow structure, rebuilt in iOS 26 dark mode with the scotch-bonnet palette kept intact. Every panel is real Liquid Glass — translucent, blurred, saturated, with a specular highlight — floating over an ambient orange bloom so the material has something to refract. Twenty screens covering all distinct patterns in their thirty-screen funnel.</p>
+
+<!-- ===================== ENTRY ===================== -->
+<div class="flow">
+<h2>01 · Entry</h2>
+<p>Cal AI opens on a logo, then a single hero with one job: start. No value proposition essay, no carousel. The bet is that the quiz sells better than any landing screen.</p>
+<div class="rail">
+
+  <!-- Splash -->
+  <div class="slot"><div class="ph">
+    <div class="bloom" style="width:420px;height:420px;background:#F24C1E;left:-20px;top:220px"></div>
+    <div class="sb"><span>9:41</span><i></i></div>
+    <div style="position:absolute;inset:0;display:grid;place-items:center">
+      <div style="text-align:center">
+        <div class="glass" style="width:104px;height:104px;border-radius:30px;display:grid;place-items:center;margin:0 auto">
+          <div class="plate" style="--s:62px;box-shadow:none"><i class="r1"></i><i class="r2"></i></div>
+        </div>
+        <div class="d" style="font-size:31px;margin-top:22px">Naija Kcal</div>
+      </div>
+    </div>
+    <div class="home"></div>
+  </div><div class="cap">01 — Splash</div></div>
+
+  <!-- Hero -->
+  <div class="slot"><div class="ph">
+    <div class="bloom" style="width:460px;height:460px;background:#F24C1E;left:-40px;top:120px;opacity:.42"></div>
+    <div class="sb"><span>9:41</span><i></i></div>
+    <div style="display:grid;place-items:center;margin-top:52px;position:relative">
+      <div class="glass" style="width:250px;height:330px;border-radius:38px;display:grid;place-items:center">
+        <div class="plate" style="--s:196px"><i class="r1"></i><i class="r2"></i><i class="gr"></i><div class="ck"></div><div class="pt"></div></div>
+      </div>
+    </div>
+    <div class="pad" style="margin-top:46px">
+      <div class="d" style="font-size:36px;line-height:1.1">Calorie tracking<br>that knows <span style="color:var(--bonnet)">egusi</span></div>
+      <p class="sub" style="font-size:15.5px">Jollof, waakye, ackee, fufu. Snap it and we'll do the rest.</p>
+    </div>
+    <div class="cta" style="bottom:98px">Get started</div>
+    <div style="position:absolute;left:0;right:0;bottom:58px;text-align:center;font-size:14px;color:var(--muted);font-weight:600">
+      Already have an account? <span style="color:var(--bonnet)">Sign in</span></div>
+    <div class="home"></div>
+  </div><div class="cap">02 — Hero</div></div>
+
+  <!-- Gender -->
+  <div class="slot"><div class="ph">
+    <div class="bloom" style="width:340px;height:340px;background:#F24C1E;right:-90px;top:-60px;opacity:.32"></div>
+    <div class="sb"><span>9:41</span><i></i></div>
+    <div class="nav"><div class="back glass">‹</div><div class="track"><u style="width:8%"></u></div></div>
+    <div class="pad" style="margin-top:126px">
+      <div class="lt">Choose your gender</div>
+      <p class="sub">This is used to calibrate your custom plan.</p>
+      <div style="margin-top:30px">
+        <div class="opt on"><div class="tx" style="text-align:center"><b>Male</b></div></div>
+        <div class="opt glass"><div class="tx" style="text-align:center"><b>Female</b></div></div>
+        <div class="opt glass"><div class="tx" style="text-align:center"><b>Other</b></div></div>
+      </div>
+    </div>
+    <div class="cta">Continue</div>
+    <div class="home"></div>
+  </div><div class="cap">03 — Gender</div></div>
+
+  <!-- Workouts -->
+  <div class="slot"><div class="ph">
+    <div class="bloom" style="width:340px;height:340px;background:#F24C1E;right:-90px;top:-60px;opacity:.32"></div>
+    <div class="sb"><span>9:41</span><i></i></div>
+    <div class="nav"><div class="back glass">‹</div><div class="track"><u style="width:16%"></u></div></div>
+    <div class="pad" style="margin-top:126px">
+      <div class="lt">How many workouts<br>do you do a week?</div>
+      <p class="sub">This helps us set your baseline burn.</p>
+      <div style="margin-top:30px">
+        <div class="opt glass"><div class="ic">▁</div><div class="tx"><b>0 – 2</b><span>Barely any exercise</span></div></div>
+        <div class="opt on"><div class="ic">▄</div><div class="tx"><b>3 – 5</b><span>A few sessions a week</span></div></div>
+        <div class="opt glass"><div class="ic">█</div><div class="tx"><b>6+</b><span>Dedicated athlete</span></div></div>
+      </div>
+    </div>
+    <div class="cta">Continue</div>
+    <div class="home"></div>
+  </div><div class="cap">04 — Workouts</div></div>
+
+  <!-- Attribution -->
+  <div class="slot"><div class="ph">
+    <div class="bloom" style="width:340px;height:340px;background:#F24C1E;right:-90px;top:-60px;opacity:.3"></div>
+    <div class="sb"><span>9:41</span><i></i></div>
+    <div class="nav"><div class="back glass">‹</div><div class="track"><u style="width:24%"></u></div></div>
+    <div class="pad" style="margin-top:126px">
+      <div class="lt">Where did you<br>hear about us?</div>
+      <div style="margin-top:26px">
+        <div class="opt on"><div class="ic">◉</div><div class="tx"><b>Instagram</b></div></div>
+        <div class="opt glass"><div class="ic">♪</div><div class="tx"><b>TikTok</b></div></div>
+        <div class="opt glass"><div class="ic">▶</div><div class="tx"><b>YouTube</b></div></div>
+        <div class="opt glass"><div class="ic">✻</div><div class="tx"><b>WhatsApp group</b></div></div>
+        <div class="opt glass"><div class="ic">♥</div><div class="tx"><b>Friend or family</b></div></div>
+      </div>
+    </div>
+    <div class="cta">Continue</div>
+    <div class="home"></div>
+  </div><div class="cap">05 — Attribution</div></div>
+
+</div></div>
+
+<!-- ===================== PROFILE ===================== -->
+<div class="flow">
+<h2>02 · Profile &amp; goal</h2>
+<p>The measurement screens. Cal AI splits height and weight onto one screen with a metric toggle, then paces goal-setting across three separate screens — target, speed, and a reassurance beat — rather than one dense form. The slow pacing is deliberate: each tap is another unit of investment.</p>
+<div class="rail">
+
+  <!-- Height & weight -->
+  <div class="slot"><div class="ph">
+    <div class="bloom" style="width:340px;height:340px;background:#F24C1E;right:-90px;top:-60px;opacity:.3"></div>
+    <div class="sb"><span>9:41</span><i></i></div>
+    <div class="nav"><div class="back glass">‹</div><div class="track"><u style="width:32%"></u></div></div>
+    <div class="pad" style="margin-top:126px">
+      <div class="lt">Height &amp; weight</div>
+      <p class="sub">Used to calibrate your plan. Stays on your phone.</p>
+
+      <div class="glass" style="display:flex;gap:5px;margin-top:24px;border-radius:16px;padding:4px">
+        <div style="flex:1;text-align:center;padding:9px;border-radius:13px;background:var(--bonnet);color:#180A04;font-size:13.5px;font-weight:700">Metric</div>
+        <div style="flex:1;text-align:center;padding:9px;font-size:13.5px;font-weight:600;color:var(--muted)">Imperial</div>
+      </div>
+
+      <div style="display:flex;gap:12px;margin-top:18px">
+        <div class="glass card" style="flex:1;text-align:center">
+          <div class="eyebrow">Height</div>
+          <div style="margin-top:10px;font-size:13px;color:var(--muted);opacity:.4">172</div>
+          <div class="d" style="font-size:36px;color:var(--bonnet);margin:2px 0">174</div>
+          <div style="font-size:13px;color:var(--muted);opacity:.4">176</div>
+          <div style="font-size:12px;color:var(--muted);margin-top:8px;font-weight:600">cm</div>
+        </div>
+        <div class="glass card" style="flex:1;text-align:center">
+          <div class="eyebrow">Weight</div>
+          <div style="margin-top:10px;font-size:13px;color:var(--muted);opacity:.4">82</div>
+          <div class="d" style="font-size:36px;color:var(--bonnet);margin:2px 0">83</div>
+          <div style="font-size:13px;color:var(--muted);opacity:.4">84</div>
+          <div style="font-size:12px;color:var(--muted);margin-top:8px;font-weight:600">kg</div>
+        </div>
+      </div>
+    </div>
+    <div class="cta">Continue</div>
+    <div class="home"></div>
+  </div><div class="cap">06 — Height &amp; weight</div></div>
+
+  <!-- Goal -->
+  <div class="slot"><div class="ph">
+    <div class="bloom" style="width:340px;height:340px;background:#F24C1E;right:-90px;top:-60px;opacity:.3"></div>
+    <div class="sb"><span>9:41</span><i></i></div>
+    <div class="nav"><div class="back glass">‹</div><div class="track"><u style="width:40%"></u></div></div>
+    <div class="pad" style="margin-top:126px">
+      <div class="lt">What is your goal?</div>
+      <p class="sub">This helps us generate a plan for your calorie intake.</p>
+      <div style="margin-top:30px">
+        <div class="opt glass"><div class="tx" style="text-align:center"><b>Lose weight</b></div></div>
+        <div class="opt glass"><div class="tx" style="text-align:center"><b>Maintain</b></div></div>
+        <div class="opt on"><div class="tx" style="text-align:center"><b>Gain weight</b></div></div>
+      </div>
+    </div>
+    <div class="cta">Continue</div>
+    <div class="home"></div>
+  </div><div class="cap">07 — Goal</div></div>
+
+  <!-- Desired weight ruler -->
+  <div class="slot"><div class="ph">
+    <div class="bloom" style="width:400px;height:400px;background:#F24C1E;left:-30px;top:300px;opacity:.34"></div>
+    <div class="sb"><span>9:41</span><i></i></div>
+    <div class="nav"><div class="back glass">‹</div><div class="track"><u style="width:48%"></u></div></div>
+    <div class="pad" style="margin-top:126px">
+      <div class="lt">What is your<br>desired weight?</div>
+      <div style="text-align:center;margin-top:60px">
+        <div class="eyebrow">Gain weight</div>
+        <div class="d" style="font-size:66px;margin-top:8px">91.0 <span style="font-size:24px;color:var(--muted)">kg</span></div>
+      </div>
+      <div style="margin-top:40px;position:relative;height:56px;overflow:hidden">
+        <div style="display:flex;gap:11px;align-items:flex-end;height:44px;justify-content:center">
+          <span style="width:2px;height:16px;background:rgba(247,237,216,.2);display:block"></span>
+          <span style="width:2px;height:28px;background:rgba(247,237,216,.3);display:block"></span>
+          <span style="width:2px;height:16px;background:rgba(247,237,216,.2);display:block"></span>
+          <span style="width:2px;height:16px;background:rgba(247,237,216,.2);display:block"></span>
+          <span style="width:2px;height:28px;background:rgba(247,237,216,.3);display:block"></span>
+          <span style="width:3px;height:44px;background:var(--bonnet);display:block;border-radius:2px"></span>
+          <span style="width:2px;height:28px;background:rgba(247,237,216,.3);display:block"></span>
+          <span style="width:2px;height:16px;background:rgba(247,237,216,.2);display:block"></span>
+          <span style="width:2px;height:16px;background:rgba(247,237,216,.2);display:block"></span>
+          <span style="width:2px;height:28px;background:rgba(247,237,216,.3);display:block"></span>
+          <span style="width:2px;height:16px;background:rgba(247,237,216,.2);display:block"></span>
+        </div>
+      </div>
+    </div>
+    <div class="cta">Continue</div>
+    <div class="home"></div>
+  </div><div class="cap">08 — Desired weight</div></div>
+
+  <!-- Reassurance -->
+  <div class="slot"><div class="ph">
+    <div class="bloom" style="width:440px;height:440px;background:#F24C1E;left:-30px;top:180px;opacity:.4"></div>
+    <div class="sb"><span>9:41</span><i></i></div>
+    <div class="nav"><div class="back glass">‹</div><div class="track"><u style="width:56%"></u></div></div>
+    <div style="position:absolute;inset:0;display:grid;place-items:center;padding:0 30px">
+      <div style="text-align:center">
+        <div class="glass" style="width:82px;height:82px;border-radius:26px;display:grid;place-items:center;margin:0 auto;font-size:34px">◎</div>
+        <div class="d" style="font-size:31px;line-height:1.18;margin-top:26px">
+          Gaining <span style="color:var(--bonnet)">8 kg</span> is a realistic target</div>
+        <p class="sub" style="font-size:15px">It's not hard at all. Most people who set this pace reach it — and you already eat the foods that get you there.</p>
+      </div>
+    </div>
+    <div class="cta">Continue</div>
+    <div class="home"></div>
+  </div><div class="cap">09 — Reassurance</div></div>
+
+  <!-- Speed -->
+  <div class="slot"><div class="ph">
+    <div class="bloom" style="width:400px;height:400px;background:#F24C1E;left:-30px;top:300px;opacity:.32"></div>
+    <div class="sb"><span>9:41</span><i></i></div>
+    <div class="nav"><div class="back glass">‹</div><div class="track"><u style="width:64%"></u></div></div>
+    <div class="pad" style="margin-top:126px">
+      <div class="lt">How fast do you want<br>to reach your goal?</div>
+      <div class="eyebrow" style="margin-top:26px;text-align:center">Gain weight speed per week</div>
+      <div class="d" style="font-size:54px;text-align:center;margin-top:4px">1.0 <span style="font-size:21px;color:var(--muted)">kg</span></div>
+
+      <!-- drawn speed marks — chevrons read as pace with zero ambiguity, unlike animal emoji -->
+      <div style="display:flex;justify-content:space-between;margin-top:34px;align-items:center">
+        <svg width="22" height="15" viewBox="0 0 22 15" style="color:rgba(247,237,216,.55)">
+          <path d="M5 3l4.5 4.5L5 12" stroke="currentColor" stroke-width="2.4" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        <svg width="30" height="15" viewBox="0 0 30 15" style="color:#F24C1E">
+          <path d="M7 3l4.5 4.5L7 12M15 3l4.5 4.5L15 12" stroke="currentColor" stroke-width="2.4" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        <svg width="38" height="15" viewBox="0 0 38 15" style="color:rgba(247,237,216,.55)">
+          <path d="M9 3l4.5 4.5L9 12M17 3l4.5 4.5L17 12M25 3l4.5 4.5L25 12" stroke="currentColor" stroke-width="2.4" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </div>
+      <div style="margin-top:14px;position:relative">
+        <div style="height:8px;border-radius:5px;background:rgba(247,237,216,.12)"></div>
+        <div style="position:absolute;left:0;top:0;height:8px;width:50%;border-radius:5px;background:var(--bonnet)"></div>
+        <div class="glass" style="position:absolute;left:50%;top:-9px;width:26px;height:26px;border-radius:50%;transform:translateX(-50%);background:var(--cream)"></div>
+      </div>
+      <div style="display:flex;justify-content:space-between;margin-top:12px;font-size:12.5px;color:var(--muted);font-weight:600">
+        <span>0.1 kg</span><span>1.0 kg</span><span>1.5 kg</span>
+      </div>
+      <div class="glass card" style="margin-top:28px;text-align:center">
+        <div style="font-size:12.5px;color:var(--bonnet);font-weight:700;letter-spacing:.6px">RECOMMENDED</div>
+        <div style="font-size:14px;color:var(--muted);margin-top:6px;font-weight:500;line-height:1.5">
+          Steady enough to hold. You'll reach 91 kg by <b style="color:var(--cream)">19 October</b>.</div>
+      </div>
+
+      <!-- 2 rows, not 3: the third said "time to goal, 12 weeks" which the RECOMMENDED
+           card above already states as "by 19 October". Cutting it clears the CTA and
+           removes a duplicated fact. -->
+      <div class="eyebrow" style="margin-top:24px">What this pace means</div>
+      <div class="glass card" style="margin-top:11px;padding:15px 18px">
+        <div style="display:flex;justify-content:space-between;align-items:center">
+          <span style="font-size:14px;color:var(--muted);font-weight:500">Daily surplus</span>
+          <span class="d" style="font-size:16px">+430 kcal</span></div>
+        <div style="height:1px;background:var(--line);margin:12px 0"></div>
+        <div style="display:flex;justify-content:space-between;align-items:center">
+          <span style="font-size:14px;color:var(--muted);font-weight:500">Roughly</span>
+          <span class="d" style="font-size:16px">1 extra wrap</span></div>
+      </div>
+    </div>
+    <div class="cta">Continue</div>
+    <div class="home"></div>
+  </div><div class="cap">10 — Speed</div></div>
+
+</div></div>
+
+<!-- ===================== PERSUASION ===================== -->
+<div class="flow">
+<h2>03 · Persuasion — the part everyone skips</h2>
+<p>This is the block I missed entirely on my first pass, and it is where Cal AI does its real selling. Comparison charts, an objection question that makes you name your own weakness, and a trust beat before asking for permissions. None of it collects anything the app needs. All of it makes the paywall easier.</p>
+<div class="rail">
+
+  <!-- Comparison chart -->
+  <div class="slot"><div class="ph">
+    <div class="bloom" style="width:380px;height:380px;background:#F24C1E;right:-60px;top:120px;opacity:.3"></div>
+    <div class="sb"><span>9:41</span><i></i></div>
+    <div class="nav"><div class="back glass">‹</div><div class="track"><u style="width:70%"></u></div></div>
+    <div class="pad" style="margin-top:126px">
+      <div class="lt">Naija Kcal creates<br>long-term results</div>
+      <div class="glass card" style="margin-top:28px">
+        <svg width="100%" height="180" viewBox="0 0 300 180" style="overflow:visible">
+          <defs><linearGradient id="g26" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0%" stop-color="#F24C1E" stop-opacity=".3"/>
+            <stop offset="100%" stop-color="#F24C1E" stop-opacity="0"/></linearGradient></defs>
+          <path d="M0,26 C60,34 96,96 150,116 C204,136 250,140 300,142" fill="none"
+                stroke="#F24C1E" stroke-width="4" stroke-linecap="round"/>
+          <path d="M0,26 C60,34 96,96 150,116 C204,136 250,140 300,142 L300,180 L0,180 Z" fill="url(#g26)"/>
+          <path d="M0,26 C60,40 92,84 140,86 C196,88 234,52 300,30" fill="none"
+                stroke="#8E9082" stroke-width="3.5" stroke-linecap="round" stroke-dasharray="7 7"/>
+          <text x="196" y="24" fill="#8E9082" font-size="12" font-family="Inter" font-weight="600">Without</text>
+          <text x="196" y="164" fill="#F24C1E" font-size="12" font-family="Inter" font-weight="700">Naija Kcal</text>
+        </svg>
+        <div style="display:flex;justify-content:space-between;font-size:11.5px;color:var(--muted);font-weight:600;margin-top:6px">
+          <span>Month 1</span><span>Month 6</span></div>
+      </div>
+      <p class="sub" style="text-align:center;margin-top:22px">
+        <b style="color:var(--cream)">80%</b> of our users hold their result six months later.</p>
+    </div>
+    <div class="cta">Continue</div>
+    <div class="home"></div>
+  </div><div class="cap">11 — Social proof</div></div>
+
+  <!-- Blockers -->
+  <div class="slot"><div class="ph">
+    <div class="bloom" style="width:340px;height:340px;background:#F24C1E;right:-90px;top:-60px;opacity:.3"></div>
+    <div class="sb"><span>9:41</span><i></i></div>
+    <div class="nav"><div class="back glass">‹</div><div class="track"><u style="width:76%"></u></div></div>
+    <div class="pad" style="margin-top:126px">
+      <div class="lt">What's stopping you<br>from reaching<br>your goals?</div>
+      <div style="margin-top:26px">
+        <div class="opt on"><div class="ic">◔</div><div class="tx"><b>Not consistent</b></div></div>
+        <div class="opt glass"><div class="ic">◍</div><div class="tx"><b>Unhealthy eating habits</b></div></div>
+        <div class="opt glass"><div class="ic">◎</div><div class="tx"><b>No support</b></div></div>
+        <div class="opt glass"><div class="ic">◷</div><div class="tx"><b>Busy schedule</b></div></div>
+        <div class="opt glass"><div class="ic">◈</div><div class="tx"><b>No meal inspiration</b></div></div>
+      </div>
+    </div>
+    <div class="cta">Continue</div>
+    <div class="home"></div>
+  </div><div class="cap">12 — Blockers</div></div>
+
+  <!-- Trust -->
+  <div class="slot"><div class="ph">
+    <div class="bloom" style="width:440px;height:440px;background:#F24C1E;left:-30px;top:200px;opacity:.4"></div>
+    <div class="sb"><span>9:41</span><i></i></div>
+    <div style="position:absolute;inset:0;display:grid;place-items:center;padding:0 30px">
+      <div style="text-align:center">
+        <div class="glass" style="width:96px;height:96px;border-radius:30px;display:grid;place-items:center;margin:0 auto">
+          <svg width="42" height="46" viewBox="0 0 42 46" fill="none">
+            <path d="M21 2 4 9v13c0 10.5 7.2 19.5 17 22 9.8-2.5 17-11.5 17-22V9L21 2z"
+                  stroke="#F24C1E" stroke-width="3" stroke-linejoin="round"/>
+            <path d="M14 23l5 5 10-10" stroke="#F7EDD8" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg></div>
+        <div class="d" style="font-size:30px;line-height:1.18;margin-top:26px">Thank you for<br>trusting us</div>
+        <p class="sub" style="font-size:15px">Now let's personalise Naija Kcal for you.</p>
+        <div class="glass card" style="margin-top:30px;display:flex;gap:12px;text-align:left">
+          <svg width="17" height="20" viewBox="0 0 17 20" fill="none" style="flex:0 0 17px;margin-top:1px">
+            <rect x="1.5" y="8" width="14" height="10.5" rx="3" stroke="#8E9082" stroke-width="2"/>
+            <path d="M4.8 8V5.4a3.7 3.7 0 0 1 7.4 0V8" stroke="#8E9082" stroke-width="2" stroke-linecap="round"/>
+          </svg>
+          <div style="font-size:13px;color:var(--muted);line-height:1.5;font-weight:500">
+            Your data stays on your device. We don't sell it, and we never will.</div>
+        </div>
+      </div>
+    </div>
+    <div class="cta">Continue</div>
+    <div class="home"></div>
+  </div><div class="cap">13 — Trust</div></div>
+
+  <!-- Notifications -->
+  <div class="slot"><div class="ph">
+    <div class="bloom" style="width:380px;height:380px;background:#F24C1E;left:0;top:200px;opacity:.3"></div>
+    <div class="sb"><span>9:41</span><i></i></div>
+    <div class="pad" style="margin-top:96px">
+      <div class="lt">Reach your goals<br>with reminders</div>
+      <p class="sub">A nudge at dinner time. Nothing else.</p>
+    </div>
+
+    <div style="position:absolute;inset:0;background:rgba(0,0,0,.55);backdrop-filter:blur(3px)"></div>
+    <div class="glass" style="position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);
+      width:280px;border-radius:30px;padding:22px 20px 0;text-align:center;z-index:4">
+      <div style="font-size:16.5px;font-weight:700">"Naija Kcal" Would Like to Send You Notifications</div>
+      <div style="font-size:13px;color:var(--muted);margin-top:8px;line-height:1.45">
+        Notifications may include alerts, sounds and icon badges.</div>
+      <div style="display:flex;margin:20px -20px 0;border-top:.5px solid var(--line)">
+        <div style="flex:1;padding:14px;font-size:16px;font-weight:500;color:var(--muted);border-right:.5px solid var(--line)">Don't Allow</div>
+        <div style="flex:1;padding:14px;font-size:16px;font-weight:700;color:var(--bonnet)">Allow</div>
+      </div>
+    </div>
+    <div class="home"></div>
+  </div><div class="cap">14 — Notification priming</div></div>
+
+  <!-- Referral -->
+  <div class="slot"><div class="ph">
+    <div class="bloom" style="width:340px;height:340px;background:#F24C1E;right:-90px;top:-60px;opacity:.3"></div>
+    <div class="sb"><span>9:41</span><i></i></div>
+    <div class="nav"><div class="back glass">‹</div><div class="track"><u style="width:88%"></u></div></div>
+    <div class="pad" style="margin-top:126px">
+      <div class="lt">Have a referral code?</div>
+      <p class="sub">Optional. Skip if a friend didn't send you.</p>
+      <div class="glass" style="margin-top:26px;border-radius:20px;padding:18px;display:flex;align-items:center">
+        <span style="font-size:17px;font-weight:600;letter-spacing:3px;color:var(--muted)">— — — — —</span>
+        <span style="margin-left:auto;font-size:14px;font-weight:700;color:var(--bonnet)">Paste</span>
+      </div>
+    </div>
+    <div class="cta">Continue</div>
+    <div style="position:absolute;left:0;right:0;bottom:14px;text-align:center;font-size:14px;color:var(--muted);font-weight:600">Skip</div>
+    <div class="home"></div>
+  </div><div class="cap">15 — Referral</div></div>
+
+</div></div>
+
+<!-- ===================== PAYOFF ===================== -->
+<div class="flow">
+<h2>04 · Payoff &amp; paywall</h2>
+<p>Generation is theatre — the maths takes milliseconds, but a visible progress climb makes the plan feel earned. Note the ordering Cal AI uses and I originally got wrong: <b>plan reveal comes before sign-in, and sign-in comes before the paywall.</b> You see what you're buying, then you commit an account, then you're asked for money.</p>
+<div class="rail">
+
+  <!-- Generating -->
+  <div class="slot"><div class="ph">
+    <div class="bloom" style="width:460px;height:460px;background:#F24C1E;left:-30px;top:180px;opacity:.44"></div>
+    <div class="sb"><span>9:41</span><i></i></div>
+    <div style="display:grid;place-items:center;margin-top:180px;position:relative">
+      <svg width="190" height="190" viewBox="0 0 190 190" style="transform:rotate(-90deg)">
+        <circle cx="95" cy="95" r="82" fill="none" stroke="rgba(247,237,216,.12)" stroke-width="13"/>
+        <circle cx="95" cy="95" r="82" fill="none" stroke="#F24C1E" stroke-width="13"
+                stroke-linecap="round" stroke-dasharray="515" stroke-dashoffset="422"/>
+      </svg>
+      <div class="d" style="position:absolute;font-size:46px">18<span style="font-size:20px;color:var(--muted)">%</span></div>
+    </div>
+    <div class="pad" style="margin-top:46px;text-align:center">
+      <div class="d" style="font-size:26px">Setting everything up</div>
+      <div class="glass card" style="margin-top:24px;text-align:left">
+        <div style="font-size:14px;font-weight:600;color:var(--ugu)">✓ &nbsp;Daily calories</div>
+        <div style="font-size:14px;font-weight:600;color:var(--ugu);margin-top:11px">✓ &nbsp;Protein, carbs &amp; fat</div>
+        <div style="font-size:14px;font-weight:600;color:var(--bonnet);margin-top:11px">◔ &nbsp;Loading 340 West African dishes</div>
+        <div style="font-size:14px;font-weight:600;color:var(--muted);opacity:.45;margin-top:11px">○ &nbsp;Calibrating portion sizes</div>
+      </div>
+    </div>
+    <div class="home"></div>
+  </div><div class="cap">16 — Generating</div></div>
+
+  <!-- Plan ready -->
+  <div class="slot"><div class="ph">
+    <div class="bloom" style="width:400px;height:400px;background:#F24C1E;right:-60px;top:80px;opacity:.32"></div>
+    <div class="sb"><span>9:41</span><i></i></div>
+    <div class="pad" style="margin-top:26px">
+      <div class="d" style="font-size:27px;line-height:1.18">Congratulations,<br>your plan is ready</div>
+      <div class="glass card" style="margin-top:18px;display:flex;align-items:center;gap:12px">
+        <div style="font-size:12.5px;color:var(--muted);font-weight:600">You should gain</div>
+        <div class="d" style="font-size:19px;margin-left:auto">8 kg by 19 Oct</div>
+      </div>
+
+      <div class="eyebrow" style="margin-top:24px">Daily recommendation</div>
+      <p style="font-size:12px;color:var(--muted);margin-top:5px">You can edit this any time</p>
+
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:11px;margin-top:14px">
+        <div class="glass card" style="grid-column:1/-1;display:flex;align-items:center;gap:18px">
+          <div style="position:relative;width:96px;height:96px;flex:0 0 96px">
+            <svg width="96" height="96" viewBox="0 0 96 96" style="transform:rotate(-90deg)">
+              <circle cx="48" cy="48" r="40" fill="none" stroke="rgba(247,237,216,.12)" stroke-width="10"/>
+              <circle cx="48" cy="48" r="40" fill="none" stroke="#F7EDD8" stroke-width="10" stroke-linecap="round" stroke-dasharray="251" stroke-dashoffset="0"/>
+            </svg>
+            <div style="position:absolute;inset:0;display:grid;place-items:center">
+              <div class="d" style="font-size:23px">2583</div></div>
+          </div>
+          <div><div class="eyebrow">Calories</div>
+          <div style="font-size:13px;color:var(--muted);margin-top:6px;line-height:1.45;font-weight:500">
+            About one plate of jollof plus two proper meals.</div></div>
+        </div>
+
+      </div>
+
+      <!-- BUG FIX: was a 2-col grid showing only Carbs and Protein. Fat was missing entirely. -->
+      <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:9px;margin-top:11px">
+        <div class="glass card" style="text-align:center;padding:14px 8px">
+          <svg width="54" height="54" viewBox="0 0 54 54" style="transform:rotate(-90deg)">
+            <circle cx="27" cy="27" r="22" fill="none" stroke="rgba(247,237,216,.12)" stroke-width="7"/>
+            <circle cx="27" cy="27" r="22" fill="none" stroke="#E8A33D" stroke-width="7" stroke-linecap="round" stroke-dasharray="138" stroke-dashoffset="26"/>
+          </svg>
+          <div class="d" style="font-size:18px;margin-top:7px">390g</div>
+          <div style="font-size:11.5px;color:var(--muted);font-weight:600">Carbs</div>
+        </div>
+        <div class="glass card" style="text-align:center;padding:14px 8px">
+          <svg width="54" height="54" viewBox="0 0 54 54" style="transform:rotate(-90deg)">
+            <circle cx="27" cy="27" r="22" fill="none" stroke="rgba(247,237,216,.12)" stroke-width="7"/>
+            <circle cx="27" cy="27" r="22" fill="none" stroke="#7FA650" stroke-width="7" stroke-linecap="round" stroke-dasharray="138" stroke-dashoffset="41"/>
+          </svg>
+          <div class="d" style="font-size:18px;margin-top:7px">200g</div>
+          <div style="font-size:11.5px;color:var(--muted);font-weight:600">Protein</div>
+        </div>
+        <div class="glass card" style="text-align:center;padding:14px 8px">
+          <svg width="54" height="54" viewBox="0 0 54 54" style="transform:rotate(-90deg)">
+            <circle cx="27" cy="27" r="22" fill="none" stroke="rgba(247,237,216,.12)" stroke-width="7"/>
+            <circle cx="27" cy="27" r="22" fill="none" stroke="#6B84F2" stroke-width="7" stroke-linecap="round" stroke-dasharray="138" stroke-dashoffset="58"/>
+          </svg>
+          <div class="d" style="font-size:18px;margin-top:7px">70g</div>
+          <div style="font-size:11.5px;color:var(--muted);font-weight:600">Fat</div>
+        </div>
+      </div>
+
+      <!-- fills the lower void with something a user would actually want here -->
+      <div class="glass card" style="margin-top:11px;display:flex;align-items:center;gap:14px;padding:16px 18px">
+        <div style="position:relative;width:46px;height:46px;flex:0 0 46px">
+          <svg width="46" height="46" viewBox="0 0 46 46" style="transform:rotate(-90deg)">
+            <circle cx="23" cy="23" r="19" fill="none" stroke="rgba(247,237,216,.12)" stroke-width="6"/>
+            <circle cx="23" cy="23" r="19" fill="none" stroke="#F24C1E" stroke-width="6" stroke-linecap="round" stroke-dasharray="119" stroke-dashoffset="24"/>
+          </svg>
+          <div style="position:absolute;inset:0;display:grid;place-items:center">
+            <div class="d" style="font-size:14px">8</div></div>
+        </div>
+        <div style="flex:1">
+          <div style="font-size:14.5px;font-weight:650">Health score</div>
+          <div style="font-size:12.5px;color:var(--muted);margin-top:3px;font-weight:500">Good balance. Protein is the one to watch.</div>
+        </div>
+      </div>
+
+      <div style="font-size:12px;color:var(--muted);margin-top:15px;text-align:center;line-height:1.5;font-weight:500;max-width:290px;margin-left:auto;margin-right:auto">
+        Based on 83 kg · 3–5 workouts a week · +1.0 kg weekly</div>
+    </div>
+    <div class="cta">Let's get started</div>
+    <div class="home"></div>
+  </div><div class="cap">17 — Plan ready</div></div>
+
+  <!-- Sign in -->
+  <div class="slot"><div class="ph">
+    <div class="bloom" style="width:400px;height:400px;background:#F24C1E;left:-30px;top:260px;opacity:.34"></div>
+    <div class="sb"><span>9:41</span><i></i></div>
+    <div style="position:absolute;inset:0;display:grid;place-items:center;padding:0 28px">
+      <div style="text-align:center;width:100%">
+        <div class="glass" style="width:86px;height:86px;border-radius:27px;display:grid;place-items:center;margin:0 auto;font-size:34px">☁</div>
+        <div class="d" style="font-size:30px;margin-top:24px">Save your progress</div>
+        <p class="sub">So you don't lose your plan if you change phone.</p>
+        <div class="glass" style="margin-top:32px;border-radius:28px;height:56px;display:flex;align-items:center;justify-content:center;gap:9px;font-size:16px;font-weight:650">
+           Sign in with Apple</div>
+        <div class="glass" style="margin-top:11px;border-radius:28px;height:56px;display:flex;align-items:center;justify-content:center;gap:9px;font-size:16px;font-weight:650">
+          G&nbsp; Sign in with Google</div>
+      </div>
+    </div>
+    <div class="home"></div>
+  </div><div class="cap">18 — Sign in</div></div>
+
+  <!-- Paywall -->
+  <div class="slot"><div class="ph">
+    <div class="bloom" style="width:460px;height:460px;background:#F24C1E;left:-40px;top:60px;opacity:.4"></div>
+    <div class="sb"><span>9:41</span><i></i></div>
+    <div class="pad" style="margin-top:16px">
+      <div class="d" style="font-size:29px;line-height:1.16">Unlock Naija Kcal to<br>reach your goal faster</div>
+
+      <div class="glass card" style="margin-top:20px;display:flex;align-items:center;gap:16px">
+        <div style="position:relative;width:84px;height:84px;flex:0 0 84px">
+          <svg width="84" height="84" viewBox="0 0 84 84" style="transform:rotate(-90deg)">
+            <circle cx="42" cy="42" r="35" fill="none" stroke="rgba(247,237,216,.12)" stroke-width="9"/>
+            <circle cx="42" cy="42" r="35" fill="none" stroke="#F24C1E" stroke-width="9" stroke-linecap="round" stroke-dasharray="220" stroke-dashoffset="66"/>
+          </svg>
+          <div style="position:absolute;inset:0;display:grid;place-items:center">
+            <div class="d" style="font-size:19px">2583</div></div>
+        </div>
+        <div style="flex:1">
+          <div class="mb"><div class="t"><em>Carbs</em><b>390g</b></div><div class="bar"><u style="width:78%;background:var(--palm)"></u></div></div>
+          <div class="mb"><div class="t"><em>Protein</em><b>200g</b></div><div class="bar"><u style="width:64%;background:var(--ugu)"></u></div></div>
+          <div class="mb"><div class="t"><em>Fat</em><b>70g</b></div><div class="bar"><u style="width:46%;background:var(--sky)"></u></div></div>
+        </div>
+      </div>
+
+      <div style="margin-top:20px">
+        <div style="display:flex;gap:10px;align-items:flex-start;margin-bottom:12px">
+          <span style="color:var(--bonnet);font-weight:800">✓</span>
+          <span style="font-size:14.5px;font-weight:500;line-height:1.4">Every West African &amp; Caribbean dish, portioned properly</span></div>
+        <div style="display:flex;gap:10px;align-items:flex-start;margin-bottom:12px">
+          <span style="color:var(--bonnet);font-weight:800">✓</span>
+          <span style="font-size:14.5px;font-weight:500;line-height:1.4">Unlimited scans, no daily cap</span></div>
+        <div style="display:flex;gap:10px;align-items:flex-start">
+          <span style="color:var(--bonnet);font-weight:800">✓</span>
+          <span style="font-size:14.5px;font-weight:500;line-height:1.4">Wrap, derica, ladle — units that mean something</span></div>
+      </div>
+
+      <div class="opt on" style="margin-top:20px;border-radius:22px">
+        <div class="tx"><b>Yearly</b><span>₦1,250/mo · billed once</span></div>
+        <span style="background:rgba(24,10,4,.2);font-size:10.5px;font-weight:800;padding:5px 9px;border-radius:8px">SAVE 62%</span>
+      </div>
+      <div class="opt glass" style="border-radius:22px">
+        <div class="tx"><b>Monthly</b><span>Cancel whenever</span></div>
+        <span class="d" style="font-size:16px">₦3,300</span>
+      </div>
+    </div>
+    <div class="cta" style="bottom:56px">Start my 3-day free trial</div>
+    <div style="position:absolute;left:0;right:0;bottom:32px;text-align:center;font-size:12px;color:var(--muted);font-weight:600">
+      No payment due now</div>
+    <div class="home"></div>
+  </div><div class="cap">19 — Paywall</div></div>
+
+  <!-- Dashboard -->
+  <div class="slot"><div class="ph">
+    <div class="bloom" style="width:400px;height:400px;background:#F24C1E;right:-80px;top:-40px;opacity:.26"></div>
+    <div class="sb"><span>9:41</span><i></i></div>
+    <div class="pad">
+      <div style="display:flex;align-items:center;justify-content:space-between;margin-top:14px">
+        <div class="d" style="font-size:25px">Naija Kcal</div>
+        <div class="glass" style="border-radius:100px;padding:7px 13px;display:flex;gap:6px;align-items:center">
+          <svg width="12" height="15" viewBox="0 0 12 15" fill="#F24C1E">
+            <path d="M6 0c2.4 3 .9 4.4 2.4 5.4.9-.5.9-2 .9-2C10.8 5 11.4 6.5 11.4 8a5.4 5.4 0 0 1-10.8 0c0-3 2-5 3.4-6.4 0 1.5.5 2.4 1 2.9C6.4 3.4 5 2.4 6 0z"/></svg>
+          <span class="d" style="font-size:14px;color:var(--bonnet)">7</span></div>
+      </div>
+
+      <div style="display:flex;gap:6px;margin-top:16px">
+        <div style="flex:1;text-align:center;font-size:11.5px;color:var(--muted);font-weight:600">M<div style="margin-top:6px;font-size:13px;color:var(--cream)">20</div></div>
+        <div style="flex:1;text-align:center;font-size:11.5px;color:var(--muted);font-weight:600">T<div style="margin-top:6px;font-size:13px;color:var(--cream)">21</div></div>
+        <div style="flex:1;text-align:center;font-size:11.5px;color:var(--muted);font-weight:600">W<div style="margin-top:6px;font-size:13px;color:var(--cream)">22</div></div>
+        <div style="flex:1;text-align:center;font-size:11.5px;color:var(--muted);font-weight:600">T<div style="margin-top:6px;font-size:13px;color:var(--cream)">23</div></div>
+        <div style="flex:1;text-align:center;font-size:11.5px;color:var(--muted);font-weight:600">F<div style="margin-top:6px;font-size:13px;color:var(--cream)">24</div></div>
+        <div style="flex:1;text-align:center;font-size:11.5px;color:var(--muted);font-weight:600">S<div style="margin-top:6px;font-size:13px;color:var(--cream)">25</div></div>
+        <div style="flex:1;text-align:center;font-size:11.5px;color:var(--bonnet);font-weight:700">S
+          <div class="d" style="margin-top:6px;font-size:13px;color:var(--bonnet)">26</div></div>
+      </div>
+
+      <div class="glass card" style="margin-top:18px;display:flex;align-items:center;gap:8px">
+        <div style="position:relative;width:120px;height:120px;flex:0 0 120px">
+          <svg width="120" height="120" viewBox="0 0 120 120" style="transform:rotate(-90deg)">
+            <circle cx="60" cy="60" r="50" fill="none" stroke="rgba(247,237,216,.12)" stroke-width="12"/>
+            <circle cx="60" cy="60" r="50" fill="none" stroke="#F24C1E" stroke-width="12"
+                    stroke-linecap="round" stroke-dasharray="314" stroke-dashoffset="119"/>
+          </svg>
+          <div style="position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center">
+            <div class="d" style="font-size:26px">1153</div>
+            <div style="font-size:11.5px;color:var(--muted);font-weight:600">left</div></div>
+        </div>
+        <div style="flex:1;display:flex;justify-content:space-around">
+          <div style="text-align:center">
+            <svg width="52" height="52" viewBox="0 0 52 52" style="transform:rotate(-90deg)">
+              <circle cx="26" cy="26" r="21" fill="none" stroke="rgba(247,237,216,.12)" stroke-width="7"/>
+              <circle cx="26" cy="26" r="21" fill="none" stroke="#E8A33D" stroke-width="7" stroke-linecap="round" stroke-dasharray="132" stroke-dashoffset="32"/>
+            </svg>
+            <div class="d" style="font-size:14px;margin-top:5px">198g</div>
+            <div style="font-size:10.5px;color:var(--muted);font-weight:600">Carbs</div></div>
+          <div style="text-align:center">
+            <svg width="52" height="52" viewBox="0 0 52 52" style="transform:rotate(-90deg)">
+              <circle cx="26" cy="26" r="21" fill="none" stroke="rgba(247,237,216,.12)" stroke-width="7"/>
+              <circle cx="26" cy="26" r="21" fill="none" stroke="#7FA650" stroke-width="7" stroke-linecap="round" stroke-dasharray="132" stroke-dashoffset="52"/>
+            </svg>
+            <div class="d" style="font-size:14px;margin-top:5px">86g</div>
+            <div style="font-size:10.5px;color:var(--muted);font-weight:600">Protein</div></div>
+          <div style="text-align:center">
+            <svg width="52" height="52" viewBox="0 0 52 52" style="transform:rotate(-90deg)">
+              <circle cx="26" cy="26" r="21" fill="none" stroke="rgba(247,237,216,.12)" stroke-width="7"/>
+              <circle cx="26" cy="26" r="21" fill="none" stroke="#6B84F2" stroke-width="7" stroke-linecap="round" stroke-dasharray="132" stroke-dashoffset="41"/>
+            </svg>
+            <div class="d" style="font-size:14px;margin-top:5px">54g</div>
+            <div style="font-size:10.5px;color:var(--muted);font-weight:600">Fat</div></div>
+        </div>
+      </div>
+
+      <div class="d" style="font-size:18px;margin:22px 0 12px">Recently uploaded</div>
+      <div class="glass card" style="padding:13px 15px;display:flex;align-items:center;gap:13px;margin-bottom:10px">
+        <div style="width:50px;height:50px;border-radius:16px;background:#EFECE1;display:grid;place-items:center;flex:0 0 50px">
+          <div style="width:34px;height:34px;border-radius:50%;background:#DA5121"></div></div>
+        <div style="flex:1"><b style="font-size:15px;font-weight:650">Jollof rice, chicken</b>
+          <div style="font-size:12px;color:var(--muted);margin-top:3px">1 plate · 12:40</div></div>
+        <div class="d" style="font-size:17px">847</div>
+      </div>
+      <div class="glass card" style="padding:13px 15px;display:flex;align-items:center;gap:13px">
+        <div style="width:50px;height:50px;border-radius:16px;background:#EFECE1;display:grid;place-items:center;flex:0 0 50px">
+          <div style="width:34px;height:34px;border-radius:50%;background:#B4732C"></div></div>
+        <div style="flex:1"><b style="font-size:15px;font-weight:650">Egusi &amp; pounded yam</b>
+          <div style="font-size:12px;color:var(--muted);margin-top:3px">1 wrap · 19:05</div></div>
+        <div class="d" style="font-size:17px">612</div>
+      </div>
+      <!-- third meal added: two cards left ~40% of the frame empty, which reads as unfinished -->
+      <div class="glass card" style="padding:13px 15px;display:flex;align-items:center;gap:13px;margin-top:10px">
+        <div style="width:50px;height:50px;border-radius:16px;background:#EFECE1;display:grid;place-items:center;flex:0 0 50px">
+          <div style="width:34px;height:34px;border-radius:50%;background:#D89C44"></div></div>
+        <div style="flex:1"><b style="font-size:15px;font-weight:650">Akara &amp; pap</b>
+          <div style="font-size:12px;color:var(--muted);margin-top:3px">3 balls · 08:15</div></div>
+        <div class="d" style="font-size:17px">310</div>
+      </div>
+      <div class="glass card" style="padding:15px 18px;display:flex;align-items:center;gap:13px;margin-top:10px">
+        <div style="width:38px;height:38px;border-radius:12px;background:rgba(107,132,242,.18);display:grid;place-items:center;flex:0 0 38px">
+          <svg width="15" height="18" viewBox="0 0 15 18" fill="#6B84F2">
+            <path d="M7.5 0C7.5 0 0 7.2 0 11.2A7.5 7.5 0 0 0 15 11.2C15 7.2 7.5 0 7.5 0z"/></svg></div>
+        <div style="flex:1"><b style="font-size:14.5px;font-weight:650">Water</b>
+          <div style="font-size:12px;color:var(--muted);margin-top:3px">5 of 8 glasses</div></div>
+        <div style="display:flex;gap:4px">
+          <span style="width:7px;height:22px;border-radius:4px;background:#6B84F2;display:block"></span>
+          <span style="width:7px;height:22px;border-radius:4px;background:#6B84F2;display:block"></span>
+          <span style="width:7px;height:22px;border-radius:4px;background:#6B84F2;display:block"></span>
+          <span style="width:7px;height:22px;border-radius:4px;background:#6B84F2;display:block"></span>
+          <span style="width:7px;height:22px;border-radius:4px;background:#6B84F2;display:block"></span>
+          <span style="width:7px;height:22px;border-radius:4px;background:rgba(247,237,216,.13);display:block"></span>
+          <span style="width:7px;height:22px;border-radius:4px;background:rgba(247,237,216,.13);display:block"></span>
+          <span style="width:7px;height:22px;border-radius:4px;background:rgba(247,237,216,.13);display:block"></span>
+        </div>
+      </div>
+    </div>
+
+    <div class="tabs glass"><div class="on"><u>◔</u>Home</div><div><u>▤</u>Diary</div><div><u>◎</u>You</div></div>
+    <div class="fab">+</div>
+    <div class="home"></div>
+  </div><div class="cap">20 — Dashboard</div></div>
+
+</div></div>
+
+</div>

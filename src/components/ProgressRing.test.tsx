@@ -1,26 +1,31 @@
 import { render } from '@testing-library/react-native';
-import ProgressRing from './ProgressRing';
 import { RING } from '../logic/rings';
+import ProgressRing from './ProgressRing';
 
-test('an empty ring is fully offset', () => {
-  const { getByTestId } = render(
-    <ProgressRing value={0} target={2583} {...RING.calories} colour="#F24C1E" />
-  );
-  expect(getByTestId('ring-progress').props.strokeDashoffset).toBe(314);
-});
+/**
+ * The offset arithmetic itself is covered directly in logic/rings.test.ts.
+ * What matters here is that the ring is wired to the right geometry and fills
+ * on mount rather than appearing already complete.
+ */
 
-test('a completed ring has no offset', () => {
-  const { getByTestId } = render(
-    <ProgressRing value={2583} target={2583} {...RING.calories} colour="#F24C1E" />
-  );
-  // react-native-svg normalises a zero dash offset to null on the host node.
-  // The clamping arithmetic itself is covered directly in rings.test.ts.
-  expect(getByTestId('ring-progress').props.strokeDashoffset).toBeNull();
-});
-
-test('a partly-filled ring wires the computed offset through', () => {
+test('uses the full circumference as its dash array', () => {
   const { getByTestId } = render(
     <ProgressRing value={1157} target={2583} {...RING.calories} colour="#F24C1E" />
   );
-  expect(getByTestId('ring-progress').props.strokeDashoffset).toBeCloseTo(173.35, 1);
+  expect(getByTestId('ring-progress').props.strokeDasharray).toEqual([314, 314]);
+});
+
+test('starts empty and fills on mount rather than rendering complete', () => {
+  const { getByTestId } = render(
+    <ProgressRing value={2583} target={2583} {...RING.calories} colour="#F24C1E" />
+  );
+  // Even a full ring begins fully offset; the 700ms timing animation closes it.
+  expect(getByTestId('ring-progress').props.strokeDashoffset).toBe(314);
+});
+
+test('macro rings carry their own smaller geometry', () => {
+  const { getByTestId } = render(
+    <ProgressRing value={0} target={390} {...RING.macro} colour="#E8A33D" />
+  );
+  expect(getByTestId('ring-progress').props.strokeDasharray).toEqual([132, 132]);
 });

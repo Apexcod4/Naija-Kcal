@@ -4,6 +4,7 @@ import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import Chip from '../src/components/Chip';
 import FoodTile from '../src/components/FoodTile';
 import GlassCard from '../src/components/GlassCard';
+import RollingNumber from '../src/components/RollingNumber';
 import Stepper from '../src/components/Stepper';
 import { DETECTED_PAIR } from '../src/data/detectedPair';
 import { barWidths, computePair, formatUnit, shareNote } from '../src/logic/portion';
@@ -114,8 +115,9 @@ export default function Portion() {
         <View style={[{ borderRadius: radii.card, padding: space.cardPad, gap: 14 }, tint(colors.bonnet)]}>
           <View>
             <Text style={t.eyebrow}>This meal</Text>
-            <Text
-              maxFontSizeMultiplier={1.6}
+            <RollingNumber
+              value={totals.kcal}
+              suffix=" kcal"
               style={{
                 fontFamily: t.hero.fontFamily,
                 fontSize: 32,
@@ -123,9 +125,7 @@ export default function Portion() {
                 color: colors.bonnet,
                 marginTop: 4,
               }}
-            >
-              {totals.kcal} kcal
-            </Text>
+            />
           </View>
 
           <View style={{ flexDirection: 'row', gap: 12 }}>

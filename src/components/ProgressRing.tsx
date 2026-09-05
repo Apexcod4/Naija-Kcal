@@ -1,8 +1,18 @@
-import { ReactNode } from 'react';
+import { ReactNode, useEffect } from 'react';
 import { View } from 'react-native';
+import Animated, {
+  Easing,
+  useAnimatedProps,
+  useSharedValue,
+  withTiming,
+} from 'react-native-reanimated';
 import Svg, { Circle } from 'react-native-svg';
 import { dashOffset } from '../logic/rings';
 import { colors } from '../theme/tokens';
+
+const AnimatedCircle = Animated.createAnimatedComponent(Circle);
+
+const FILL_MS = 700;
 
 type Props = {
   value: number;
@@ -34,6 +44,16 @@ export default function ProgressRing({
   const offset = dashOffset(value, target, circumference);
   const c = size / 2;
 
+  // Starts empty and fills on mount; on a later change it animates from the
+  // previous value rather than remounting, so logging a meal grows the ring.
+  const progress = useSharedValue(circumference);
+
+  useEffect(() => {
+    progress.value = withTiming(offset, { duration: FILL_MS, easing: Easing.out(Easing.cubic) });
+  }, [offset, progress]);
+
+  const animatedProps = useAnimatedProps(() => ({ strokeDashoffset: progress.value }));
+
   return (
     <View style={{ width: d, height: d, alignItems: 'center', justifyContent: 'center' }}>
       <Svg
@@ -50,7 +70,7 @@ export default function ProgressRing({
           strokeWidth={strokeWidth}
           fill="none"
         />
-        <Circle
+        <AnimatedCircle
           testID="ring-progress"
           cx={c}
           cy={c}
@@ -60,6 +80,7 @@ export default function ProgressRing({
           strokeLinecap="round"
           strokeDasharray={circumference}
           strokeDashoffset={offset}
+          animatedProps={animatedProps}
           fill="none"
         />
       </Svg>

@@ -1,4 +1,5 @@
-import { Pressable, Text } from 'react-native';
+import PressableScale from './PressableScale';
+import { Text } from 'react-native';
 import { colors, material } from '../theme/tokens';
 import { type as t } from '../theme/typography';
 
@@ -13,7 +14,7 @@ export default function Chip({ label, sublabel, selected, onPress }: Props) {
   const ink = selected ? colors.bonnetInk : colors.cream;
 
   return (
-    <Pressable
+    <PressableScale
       onPress={onPress}
       accessibilityRole="button"
       accessibilityState={{ selected }}
@@ -35,6 +36,6 @@ export default function Chip({ label, sublabel, selected, onPress }: Props) {
           {sublabel}
         </Text>
       ) : null}
-    </Pressable>
+    </PressableScale>
   );
 }

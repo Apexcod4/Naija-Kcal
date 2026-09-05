@@ -1,6 +1,7 @@
+import PressableScale from '../src/components/PressableScale';
 import { LinearGradient } from 'expo-linear-gradient';
 import { useRouter } from 'expo-router';
-import { Pressable, ScrollView, Text, View } from 'react-native';
+import { ScrollView, Text, View } from 'react-native';
 import Animated, { FadeInUp } from 'react-native-reanimated';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import FoodTile from '../src/components/FoodTile';
@@ -40,7 +41,7 @@ export default function Detect() {
         style={{ position: 'absolute', top: 0, left: 0, right: 0, height: PHOTO_H }}
       />
 
-      <Pressable
+      <PressableScale
         accessibilityRole="button"
         accessibilityLabel="Back"
         hitSlop={3}
@@ -61,7 +62,7 @@ export default function Detect() {
         }}
       >
         <BackIcon color={colors.cream} />
-      </Pressable>
+      </PressableScale>
 
       <ScrollView
         contentContainerStyle={{
@@ -128,7 +129,7 @@ export default function Detect() {
           bottom: insets.bottom + 20,
         }}
       >
-        <Pressable
+        <PressableScale
           accessibilityRole="button"
           onPress={() => router.push('/portion')}
           style={{
@@ -140,7 +141,7 @@ export default function Detect() {
           }}
         >
           <Text style={t.ctaLabel}>Set your portion</Text>
-        </Pressable>
+        </PressableScale>
       </View>
     </View>
   );

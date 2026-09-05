@@ -1,7 +1,8 @@
+import PressableScale from './PressableScale';
 import { BlurView } from 'expo-blur';
 import { Tabs, useRouter } from 'expo-router';
 import { ComponentProps } from 'react';
-import { Pressable, Text, View } from 'react-native';
+import { Text, View } from 'react-native';
 import { colors, material, radii, space } from '../theme/tokens';
 import { type as t } from '../theme/typography';
 import { DiaryIcon, HomeIcon, ScanIcon, YouIcon } from './icons';
@@ -61,7 +62,7 @@ export default function TabBar({ state, navigation }: TabBarProps) {
               const colour = focused ? colors.bonnet : colors.tabInactive;
 
               return (
-                <Pressable
+                <PressableScale
                   key={route.key}
                   accessibilityRole="tab"
                   accessibilityState={{ selected: focused }}
@@ -77,14 +78,14 @@ export default function TabBar({ state, navigation }: TabBarProps) {
                 >
                   <Icon color={colour} />
                   <Text style={[t.tabLabel, { color: colour }]}>{LABELS[name]}</Text>
-                </Pressable>
+                </PressableScale>
               );
             })}
           </View>
         </BlurView>
       </View>
 
-      <Pressable
+      <PressableScale
         accessibilityRole="button"
         accessibilityLabel="Scan a meal"
         onPress={() => router.push('/scan')}
@@ -102,7 +103,7 @@ export default function TabBar({ state, navigation }: TabBarProps) {
         }}
       >
         <ScanIcon color={colors.bonnetInk} />
-      </Pressable>
+      </PressableScale>
     </View>
   );
 }

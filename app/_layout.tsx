@@ -4,6 +4,9 @@ import { View } from 'react-native';
 import { colors } from '../src/theme/tokens';
 import { useAppFonts } from '../src/theme/useFonts';
 
+/** The handoff's push timing: 300-350ms. */
+const PUSH_MS = 320;
+
 export default function RootLayout() {
   const fontsReady = useAppFonts();
 
@@ -18,13 +21,18 @@ export default function RootLayout() {
         screenOptions={{
           headerShown: false,
           contentStyle: { backgroundColor: colors.pot },
+          animation: 'slide_from_right',
+          animationDuration: PUSH_MS,
         }}
       >
-        <Stack.Screen name="(tabs)" />
+        <Stack.Screen name="(tabs)" options={{ animation: 'fade' }} />
         <Stack.Screen name="scan" />
         <Stack.Screen name="detect" />
-        {/* The handoff asks for Portion to rise as a sheet over Detect. */}
-        <Stack.Screen name="portion" options={{ presentation: 'modal' }} />
+        {/* Portion rises as a sheet over Detect rather than pushing laterally. */}
+        <Stack.Screen
+          name="portion"
+          options={{ presentation: 'modal', animation: 'slide_from_bottom' }}
+        />
       </Stack>
     </>
   );

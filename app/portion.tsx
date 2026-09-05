@@ -1,5 +1,6 @@
+import PressableScale from '../src/components/PressableScale';
 import { useRouter } from 'expo-router';
-import { Pressable, ScrollView, Text, View } from 'react-native';
+import { ScrollView, Text, View } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import Chip from '../src/components/Chip';
 import FoodTile from '../src/components/FoodTile';
@@ -161,9 +162,10 @@ export default function Portion() {
           bottom: insets.bottom + 20,
         }}
       >
-        <Pressable
+        <PressableScale
           accessibilityRole="button"
           onPress={onLog}
+          haptic="success"
           style={{
             height: 56,
             borderRadius: radii.cta,
@@ -173,7 +175,7 @@ export default function Portion() {
           }}
         >
           <Text style={t.ctaLabel}>Log {totals.kcal} kcal</Text>
-        </Pressable>
+        </PressableScale>
       </View>
     </View>
   );

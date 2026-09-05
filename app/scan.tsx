@@ -1,6 +1,7 @@
+import PressableScale from '../src/components/PressableScale';
 import { CameraView, useCameraPermissions } from 'expo-camera';
 import { useRouter } from 'expo-router';
-import { Pressable, StyleSheet, Text, View, ViewStyle } from 'react-native';
+import { StyleSheet, Text, View, ViewStyle } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import CornerBrackets from '../src/components/CornerBrackets';
 import { BackIcon, SearchIcon } from '../src/components/icons';
@@ -40,9 +41,9 @@ export default function Scan() {
           <Text style={[t.body, { textAlign: 'center' }]}>
             Camera access is needed to scan a plate.
           </Text>
-          <Pressable accessibilityRole="button" onPress={requestPermission} hitSlop={8}>
+          <PressableScale accessibilityRole="button" onPress={requestPermission} hitSlop={8}>
             <Text style={[t.rowTitle, { color: colors.bonnet }]}>Allow camera</Text>
-          </Pressable>
+          </PressableScale>
         </View>
       )}
 
@@ -58,7 +59,7 @@ export default function Scan() {
           alignItems: 'center',
         }}
       >
-        <Pressable
+        <PressableScale
           accessibilityRole="button"
           accessibilityLabel="Back"
           hitSlop={3}
@@ -66,7 +67,7 @@ export default function Scan() {
           style={glassCircle}
         >
           <BackIcon color={colors.cream} />
-        </Pressable>
+        </PressableScale>
 
         <View style={{ flex: 1, alignItems: 'center' }}>
           <View
@@ -115,10 +116,12 @@ export default function Scan() {
       >
         <View accessibilityLabel="Pick from library" style={tile} />
 
-        <Pressable
+        <PressableScale
           accessibilityRole="button"
           accessibilityLabel="Capture"
           onPress={() => router.push('/detect')}
+          haptic="medium"
+          scaleTo={0.92}
           style={{
             width: 82,
             height: 82,
@@ -129,9 +132,9 @@ export default function Scan() {
           }}
         />
 
-        <Pressable accessibilityRole="button" accessibilityLabel="Search the library" style={tile}>
+        <PressableScale accessibilityRole="button" accessibilityLabel="Search the library" style={tile}>
           <SearchIcon color={colors.cream} />
-        </Pressable>
+        </PressableScale>
       </View>
     </View>
   );

@@ -1,4 +1,5 @@
-import { Pressable, Text, View } from 'react-native';
+import PressableScale from './PressableScale';
+import { Text, View } from 'react-native';
 import { MAX_UNITS, MIN_UNITS, STEP } from '../logic/portion';
 import { colors, material } from '../theme/tokens';
 import { type as t } from '../theme/typography';
@@ -17,7 +18,7 @@ type Props = {
 export default function Stepper({ value, label, onStep }: Props) {
   return (
     <View style={{ flexDirection: 'row', alignItems: 'center', gap: 10 }}>
-      <Pressable
+      <PressableScale
         testID="stepper-minus"
         hitSlop={SLOP}
         accessibilityRole="button"
@@ -35,7 +36,7 @@ export default function Stepper({ value, label, onStep }: Props) {
         }}
       >
         <Text style={{ color: colors.cream, fontSize: 20, lineHeight: 22 }}>−</Text>
-      </Pressable>
+      </PressableScale>
 
       <Text
         accessibilityLiveRegion="polite"
@@ -46,7 +47,7 @@ export default function Stepper({ value, label, onStep }: Props) {
         {label}
       </Text>
 
-      <Pressable
+      <PressableScale
         testID="stepper-plus"
         hitSlop={SLOP}
         accessibilityRole="button"
@@ -64,7 +65,7 @@ export default function Stepper({ value, label, onStep }: Props) {
         }}
       >
         <Text style={{ color: colors.bonnet, fontSize: 20, lineHeight: 22 }}>+</Text>
-      </Pressable>
+      </PressableScale>
     </View>
   );
 }

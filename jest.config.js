@@ -1,5 +1,6 @@
 module.exports = {
   preset: 'jest-expo',
+  setupFiles: ['<rootDir>/jest.setup.js'],
   // @testing-library/react-native v13 ships its matchers built in, so the old
   // extend-expect setup entry no longer exists.
   //

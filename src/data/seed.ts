@@ -25,11 +25,22 @@ export const SEED_MEALS: Meal[] = [
  * Every value here is user data in the shipping app, not a constant.
  */
 export const DEFAULT_PROFILE: Profile = {
+  // The mock's persona. Onboarding overwrites all of this.
+  goal: 'gain',
+  sex: 'male',
+  heightCm: 180,
+  weightKg: 80,
+  age: 30,
+  activity: 'moderate',
+  unitSystem: 'metric',
+
   dailyTarget: 2583,
   macroTargets: { carbs: 390, protein: 200, fat: 70 },
+
   wrapGrams: 210,
   ladleMl: 180,
   dericasPerPlate: 1.5,
+
   householdSize: 4,
   streak: 7,
 };

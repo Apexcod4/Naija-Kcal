@@ -56,3 +56,26 @@ test('the share prompt is hidden for a household of one', () => {
   useAppStore.getState().setHouseholdSize(4);
   expect(useAppStore.getState().sharePromptVisible()).toBe(true);
 });
+
+test('a fresh install has not completed onboarding', () => {
+  expect(useAppStore.getState().onboardingComplete).toBe(false);
+});
+
+test('setProfile merges rather than replacing', () => {
+  useAppStore.getState().setProfile({ wrapGrams: 300 });
+  const p = useAppStore.getState().profile;
+  expect(p.wrapGrams).toBe(300);
+  expect(p.ladleMl).toBe(180);
+});
+
+test('completing onboarding flips the gate', () => {
+  useAppStore.getState().completeOnboarding();
+  expect(useAppStore.getState().onboardingComplete).toBe(true);
+});
+
+test('calibrated units feed the portion maths', () => {
+  useAppStore.getState().setProfile({ wrapGrams: 300, ladleMl: 250 });
+  const p = useAppStore.getState().profile;
+  expect(p.wrapGrams).toBe(300);
+  expect(p.ladleMl).toBe(250);
+});

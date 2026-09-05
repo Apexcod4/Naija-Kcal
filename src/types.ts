@@ -1,5 +1,10 @@
 export type Share = 33 | 50 | 100;
 
+export type Goal = 'lose' | 'gain' | 'maintain' | 'clinical';
+export type Activity = 'low' | 'moderate' | 'high';
+export type System = 'metric' | 'imperial';
+export type Sex = 'male' | 'female';
+
 export type UnitRates = {
   kcal: number;
   carbs: number;
@@ -9,6 +14,12 @@ export type UnitRates = {
 
 export type PortionTotals = {
   kcal: number;
+  carbs: number;
+  protein: number;
+  fat: number;
+};
+
+export type MacroTargets = {
   carbs: number;
   protein: number;
   fat: number;
@@ -29,11 +40,24 @@ export type Meal = {
 };
 
 export type Profile = {
+  // Collected by the onboarding funnel
+  goal: Goal;
+  sex: Sex;
+  heightCm: number;
+  weightKg: number;
+  age: number;
+  activity: Activity;
+  unitSystem: System;
+
+  // Computed from the above
   dailyTarget: number;
-  macroTargets: { carbs: number; protein: number; fat: number };
+  macroTargets: MacroTargets;
+
+  // Calibrated units — what the portion maths multiplies by
   wrapGrams: number;
   ladleMl: number;
   dericasPerPlate: number;
+
   householdSize: number;
   streak: number;
 };

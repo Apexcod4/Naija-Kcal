@@ -12,7 +12,13 @@
     "plugins": [
       "expo-router",
       "expo-font",
-      "expo-splash-screen"
+      "expo-splash-screen",
+      [
+        "expo-camera",
+        {
+          "cameraPermission": "Naija Kcal uses the camera to recognise your meal on device."
+        }
+      ]
     ],
     "experiments": {
       "typedRoutes": true

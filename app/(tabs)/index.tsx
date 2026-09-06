@@ -1,37 +1,46 @@
 import { useRouter } from 'expo-router';
-import LogInputBar from '../../src/components/LogInputBar';
-import { DISHES } from '../../src/data/dishes';
-import { routeForMatch } from '../../src/logic/logRoute';
-import { matchPair } from '../../src/logic/matchPair';
 import { useMemo } from 'react';
-import { ScrollView, Text, View } from 'react-native';
+import { Alert, ScrollView, Text, View } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import Bloom from '../../src/components/Bloom';
+import LogInputBar from '../../src/components/LogInputBar';
 import MealRow from '../../src/components/MealRow';
+import PressableScale from '../../src/components/PressableScale';
 import ScrollFade from '../../src/components/ScrollFade';
 import StreakPill from '../../src/components/StreakPill';
 import SummaryCard from '../../src/components/SummaryCard';
 import Toast from '../../src/components/Toast';
 import WeekStrip from '../../src/components/WeekStrip';
+import { DISHES } from '../../src/data/dishes';
+import { currentStreak, dayLabel, mealsForDate, todayISO, weekOf } from '../../src/logic/days';
+import { routeForMatch } from '../../src/logic/logRoute';
+import { matchPair } from '../../src/logic/matchPair';
 import { sumMeals } from '../../src/logic/totals';
 import { useAppStore } from '../../src/state/useAppStore';
 import { colors, space } from '../../src/theme/tokens';
 import { type as t } from '../../src/theme/typography';
 
-/** Monday-first index for the week strip. */
-function mondayFirstIndex(d: Date): number {
-  return (d.getDay() + 6) % 7;
-}
-
 export default function Home() {
   const insets = useSafeAreaInsets();
   const router = useRouter();
 
-  const meals = useAppStore((s) => s.meals);
+  const allMeals = useAppStore((s) => s.meals);
   const profile = useAppStore((s) => s.profile);
   const toast = useAppStore((s) => s.toast);
   const hideToast = useAppStore((s) => s.hideToast);
   const buildLibraryPair = useAppStore((s) => s.buildLibraryPair);
+  const selectedDate = useAppStore((s) => s.selectedDate);
+  const setSelectedDate = useAppStore((s) => s.setSelectedDate);
+  const deleteMeal = useAppStore((s) => s.deleteMeal);
+
+  const today = todayISO();
+
+  const meals = useMemo(() => mealsForDate(allMeals, selectedDate), [allMeals, selectedDate]);
+  const consumed = useMemo(() => sumMeals(meals), [meals]);
+  const week = useMemo(() => weekOf(selectedDate), [selectedDate]);
+  const streak = useMemo(() => currentStreak(allMeals, today), [allMeals, today]);
+
+  const label = dayLabel(selectedDate, today);
 
   /** Typed meals resolve into the same pair-and-units flow as a scan. */
   const onSubmitText = (text: string) => {
@@ -47,18 +56,11 @@ export default function Home() {
     }
   };
 
-  const consumed = useMemo(() => sumMeals(meals), [meals]);
-
-  const { todayIndex, dates } = useMemo(() => {
-    const now = new Date();
-    const index = mondayFirstIndex(now);
-    const week = Array.from({ length: 7 }, (_, i) => {
-      const d = new Date(now);
-      d.setDate(now.getDate() - index + i);
-      return d.getDate();
-    });
-    return { todayIndex: index, dates: week };
-  }, []);
+  const confirmDelete = (id: string, name: string) =>
+    Alert.alert('Remove this meal?', `${name} will be taken off ${label.toLowerCase()}.`, [
+      { text: 'Keep it', style: 'cancel' },
+      { text: 'Remove', style: 'destructive', onPress: () => deleteMeal(id) },
+    ]);
 
   return (
     <View style={{ flex: 1, backgroundColor: colors.pot }}>
@@ -76,10 +78,31 @@ export default function Home() {
           style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between' }}
         >
           <Text style={t.appName}>Naija Kcal</Text>
-          <StreakPill days={profile.streak} />
+          <StreakPill days={streak} />
         </View>
 
-        <WeekStrip todayIndex={todayIndex} dates={dates} />
+        <View style={{ gap: 10 }}>
+          <View style={{ flexDirection: 'row', alignItems: 'baseline', gap: 10 }}>
+            <Text style={t.sectionTitle}>{label}</Text>
+            {selectedDate !== today ? (
+              <PressableScale
+                accessibilityRole="button"
+                accessibilityLabel="Back to today"
+                onPress={() => setSelectedDate(today)}
+                hitSlop={8}
+              >
+                <Text style={[t.rowMeta, { color: colors.bonnet }]}>Back to today</Text>
+              </PressableScale>
+            ) : null}
+          </View>
+
+          <WeekStrip
+            dates={week}
+            selected={selectedDate}
+            today={today}
+            onSelect={setSelectedDate}
+          />
+        </View>
 
         <SummaryCard
           consumed={consumed}
@@ -95,17 +118,32 @@ export default function Home() {
               justifyContent: 'space-between',
             }}
           >
-            <Text style={t.sectionTitle}>Today</Text>
+            <Text style={t.sectionTitle}>Eaten</Text>
             <Text style={[t.rowMeta, { fontSize: 11.5 }]}>
               {meals.length} {meals.length === 1 ? 'entry' : 'entries'}
             </Text>
           </View>
 
           {meals.length === 0 ? (
-            // TODO(design): empty-today copy is not designed. Structure only.
-            <Text style={t.body}>Nothing logged yet.</Text>
+            // TODO(design): empty-day copy is not designed. Structure only.
+            <Text style={t.body}>
+              {selectedDate === today
+                ? 'Nothing logged yet.'
+                : `Nothing was logged on ${label.toLowerCase()}.`}
+            </Text>
           ) : (
-            meals.map((m) => <MealRow key={m.id} meal={m} />)
+            meals.map((m) => (
+              <PressableScale
+                key={m.id}
+                accessibilityRole="button"
+                accessibilityLabel={`${m.name}, ${m.kcal} kcal. Double tap and hold to remove.`}
+                onLongPress={() => confirmDelete(m.id, m.name)}
+                scaleTo={0.99}
+                haptic="none"
+              >
+                <MealRow meal={m} />
+              </PressableScale>
+            ))
           )}
         </View>
       </ScrollView>
@@ -120,10 +158,7 @@ export default function Home() {
           bottom: 100,
         }}
       >
-        <LogInputBar
-          onSubmitText={onSubmitText}
-          onBarcode={() => router.push('/barcode')}
-        />
+        <LogInputBar onSubmitText={onSubmitText} onBarcode={() => router.push('/barcode')} />
       </View>
 
       <Toast message={toast?.message ?? null} onHide={hideToast} bottom={172} />

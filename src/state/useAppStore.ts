@@ -2,6 +2,7 @@ import { create } from 'zustand';
 import { persist } from 'zustand/middleware';
 import { SCANNED_PAIR } from '../data/detectedPair';
 import { DEFAULT_PROFILE, SEED_MEALS } from '../data/seed';
+import { ISODate, todayISO } from '../logic/days';
 import { computePair, formatUnit, shareLabel, stepUnit } from '../logic/portion';
 import { Dish, DishPair, Meal, PortionDraft, Profile, Share } from '../types';
 import { appStorage } from './storage';
@@ -17,12 +18,16 @@ type AppState = {
   toast: Toast;
   currentPair: DishPair;
   onboardingComplete: boolean;
+  /** Which day Home is showing. Defaults to today on every launch. */
+  selectedDate: ISODate;
 
   setWraps: (n: number) => void;
   setLadles: (n: number) => void;
   stepWraps: (delta: number) => void;
   stepLadles: (delta: number) => void;
   setShare: (s: Share) => void;
+  setSelectedDate: (d: ISODate) => void;
+  deleteMeal: (id: string) => void;
   setPair: (pair: DishPair) => void;
   buildLibraryPair: (soup: Dish, swallow: Dish) => void;
   setHouseholdSize: (n: number) => void;
@@ -48,12 +53,17 @@ export const useAppStore = create<AppState>()(
       toast: null,
       currentPair: SCANNED_PAIR,
       onboardingComplete: false,
+      selectedDate: todayISO(),
 
       setWraps: (n) => set((s) => ({ draft: { ...s.draft, wraps: clamp(n) } })),
       setLadles: (n) => set((s) => ({ draft: { ...s.draft, ladles: clamp(n) } })),
       stepWraps: (d) => set((s) => ({ draft: { ...s.draft, wraps: stepUnit(s.draft.wraps, d) } })),
       stepLadles: (d) => set((s) => ({ draft: { ...s.draft, ladles: stepUnit(s.draft.ladles, d) } })),
       setShare: (share) => set((s) => ({ draft: { ...s.draft, share } })),
+
+      setSelectedDate: (selectedDate) => set({ selectedDate }),
+
+      deleteMeal: (id) => set((s) => ({ meals: s.meals.filter((m) => m.id !== id) })),
 
       setPair: (currentPair) => set({ currentPair, draft: INITIAL_DRAFT }),
 
@@ -70,7 +80,7 @@ export const useAppStore = create<AppState>()(
       sharePromptVisible: () => get().profile.householdSize > 1,
 
       logPair: () => {
-        const { draft, meals, currentPair } = get();
+        const { draft, meals, currentPair, selectedDate } = get();
         const { soup, swallow } = currentPair;
 
         // Rates come from the pair itself, so logging egusi with eba prices
@@ -94,6 +104,8 @@ export const useAppStore = create<AppState>()(
 
         const meal: Meal = {
           id: `meal-${now.getTime()}`,
+          // Logs land on the day being viewed, so correcting yesterday works.
+          date: selectedDate,
           name: `${soup.name} & ${swallow.name.toLowerCase()}`,
           unitString,
           ...totals,
@@ -121,14 +133,23 @@ export const useAppStore = create<AppState>()(
           toast: null,
           onboardingComplete: false,
           currentPair: SCANNED_PAIR,
+          selectedDate: todayISO(),
         }),
     }),
     {
       name: 'naija-kcal',
       storage: appStorage,
-      // Meals are day-scoped and the toast is ephemeral; only durable data
-      // survives a restart.
-      partialize: (s) => ({ profile: s.profile, onboardingComplete: s.onboardingComplete }),
+      // Bumped when Meal gained a date. Stored meals from before that have no
+      // date and would vanish from every day view, so v1 state is discarded.
+      version: 2,
+      migrate: () => ({ meals: SEED_MEALS }) as Partial<AppState>,
+      // The log is the app. Only the draft, the toast and the selected day are
+      // ephemeral — selectedDate deliberately resets to today on each launch.
+      partialize: (s) => ({
+        profile: s.profile,
+        meals: s.meals,
+        onboardingComplete: s.onboardingComplete,
+      }),
     }
   )
 );

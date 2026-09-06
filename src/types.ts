@@ -26,6 +26,8 @@ export type MacroTargets = {
 };
 
 export type Meal = {
+  /** Local calendar date, "YYYY-MM-DD". Meals are grouped by this. */
+  date: string;
   id: string;
   name: string;
   unitString: string;
@@ -59,7 +61,6 @@ export type Profile = {
   dericasPerPlate: number;
 
   householdSize: number;
-  streak: number;
 };
 
 export type PortionDraft = {

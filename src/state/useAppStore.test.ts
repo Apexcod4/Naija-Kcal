@@ -1,3 +1,4 @@
+import { addDays, todayISO } from '../logic/days';
 import { dishById } from '../data/dishes';
 import { useAppStore } from './useAppStore';
 
@@ -108,5 +109,52 @@ describe('pair source', () => {
     useAppStore.getState().buildLibraryPair(dishById('okra')!, dishById('semo')!);
     expect(useAppStore.getState().currentPair.confidence).toBeUndefined();
     expect(useAppStore.getState().currentPair.source).toBe('library');
+  });
+});
+
+describe('the log over time', () => {
+  test('a logged meal carries the day it belongs to', () => {
+    useAppStore.getState().logPair();
+    expect(useAppStore.getState().meals.at(-1)!.date).toBe(todayISO());
+  });
+
+  test('logging while viewing an earlier day lands on that day', () => {
+    const yesterday = addDays(todayISO(), -1);
+    useAppStore.getState().setSelectedDate(yesterday);
+    useAppStore.getState().logPair();
+    expect(useAppStore.getState().meals.at(-1)!.date).toBe(yesterday);
+  });
+
+  test('a meal can be removed, so a mistake is not permanent', () => {
+    useAppStore.getState().logPair();
+    const id = useAppStore.getState().meals.at(-1)!.id;
+    const before = useAppStore.getState().meals.length;
+
+    useAppStore.getState().deleteMeal(id);
+
+    expect(useAppStore.getState().meals).toHaveLength(before - 1);
+    expect(useAppStore.getState().meals.some((m) => m.id === id)).toBe(false);
+  });
+
+  test('deleting an unknown id is a no-op rather than a throw', () => {
+    const before = useAppStore.getState().meals.length;
+    useAppStore.getState().deleteMeal('does-not-exist');
+    expect(useAppStore.getState().meals).toHaveLength(before);
+  });
+
+  test('meals are persisted — the log is the app', () => {
+    // Regression: meals were previously excluded from partialize, so every
+    // logged meal was destroyed on restart.
+    const persisted = useAppStore.persist.getOptions().partialize!(
+      useAppStore.getState()
+    ) as Record<string, unknown>;
+    expect(persisted).toHaveProperty('meals');
+  });
+
+  test('the selected day is NOT persisted, so a launch always opens on today', () => {
+    const persisted = useAppStore.persist.getOptions().partialize!(
+      useAppStore.getState()
+    ) as Record<string, unknown>;
+    expect(persisted).not.toHaveProperty('selectedDate');
   });
 });

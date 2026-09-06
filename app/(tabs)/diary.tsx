@@ -6,6 +6,7 @@ import GlassCard from '../../src/components/GlassCard';
 import ScrollFade from '../../src/components/ScrollFade';
 import StatusCard from '../../src/components/StatusCard';
 import WeekChart from '../../src/components/WeekChart';
+import { mealsForDate, todayISO, weekOf } from '../../src/logic/days';
 import { sumMeals } from '../../src/logic/totals';
 import { useAppStore } from '../../src/state/useAppStore';
 import { colors, radii, space } from '../../src/theme/tokens';
@@ -17,22 +18,25 @@ const MOST_EATEN = [
   { label: 'Rice dishes', pct: 41, colour: colors.bonnet },
 ];
 
-/** Placeholder history until a real per-day store exists. */
-const WEEK_HISTORY = [2410, 2180, 2620, 2350, 2480, 2900, 0];
-
 export default function Diary() {
   const insets = useSafeAreaInsets();
   const meals = useAppStore((s) => s.meals);
   const target = useAppStore((s) => s.profile.dailyTarget);
 
-  const todayIndex = (new Date().getDay() + 6) % 7;
+  const today = todayISO();
+  const dates = useMemo(() => weekOf(today), [today]);
+  const todayIndex = dates.indexOf(today);
 
-  // Today's column reflects the live log; the rest is seeded history.
-  const week = useMemo(() => {
-    const w = [...WEEK_HISTORY];
-    w[todayIndex] = sumMeals(meals).kcal;
-    return w;
-  }, [meals, todayIndex]);
+  // Every column is now the real log for that day. There is no seeded history.
+  const week = useMemo(
+    () => dates.map((d) => sumMeals(mealsForDate(meals, d)).kcal),
+    [meals, dates]
+  );
+
+  const loggedDays = week.filter((k) => k > 0);
+  const average = loggedDays.length
+    ? Math.round(loggedDays.reduce((a, b) => a + b, 0) / loggedDays.length)
+    : 0;
 
   return (
     <View style={{ flex: 1, backgroundColor: colors.pot }}>
@@ -49,7 +53,9 @@ export default function Diary() {
         <View>
           <Text style={t.screenTitle}>Diary</Text>
           <Text style={[t.body, { marginTop: 8 }]}>
-            You are averaging 2,410 kcal a day this week.
+            {average > 0
+              ? `You are averaging ${average.toLocaleString()} kcal a day this week.`
+              : 'Log a meal and this week starts filling in.'}
           </Text>
         </View>
 

@@ -1,32 +1,77 @@
 import { Text, View } from 'react-native';
-import { colors } from '../theme/tokens';
+import { ISODate } from '../logic/days';
+import { colors, radii } from '../theme/tokens';
 import { fonts, type as t } from '../theme/typography';
+import PressableScale from './PressableScale';
 
 const DAYS = ['M', 'T', 'W', 'T', 'F', 'S', 'S'];
 
-type Props = { todayIndex: number; dates: number[] };
+type Props = {
+  /** Seven ISO dates, Monday first. */
+  dates: ISODate[];
+  selected: ISODate;
+  today: ISODate;
+  onSelect: (date: ISODate) => void;
+};
 
-export default function WeekStrip({ todayIndex, dates }: Props) {
+export default function WeekStrip({ dates, selected, today, onSelect }: Props) {
   return (
     <View style={{ flexDirection: 'row' }}>
-      {DAYS.map((d, i) => {
-        const today = i === todayIndex;
+      {dates.map((date, i) => {
+        const isToday = date === today;
+        const isSelected = date === selected;
+        // A day you have not reached yet cannot be logged against.
+        const future = date > today;
+
         return (
-          <View key={i} style={{ flex: 1, alignItems: 'center', gap: 5 }}>
-            <Text style={[t.tabLabel, { fontSize: 11, color: today ? colors.bonnet : colors.muted }]}>
-              {d}
+          <PressableScale
+            key={date}
+            accessibilityRole="button"
+            accessibilityState={{ selected: isSelected, disabled: future }}
+            accessibilityLabel={date}
+            onPress={() => onSelect(date)}
+            disabled={future}
+            scaleTo={0.9}
+            style={{
+              flex: 1,
+              alignItems: 'center',
+              gap: 5,
+              paddingVertical: 6,
+              borderRadius: radii.tileSm,
+              backgroundColor: isSelected ? colors.bonnet : 'transparent',
+              opacity: future ? 0.3 : 1,
+            }}
+          >
+            <Text
+              style={[
+                t.tabLabel,
+                {
+                  fontSize: 11,
+                  color: isSelected
+                    ? colors.bonnetInk
+                    : isToday
+                      ? colors.bonnet
+                      : colors.muted,
+                },
+              ]}
+            >
+              {DAYS[i]}
             </Text>
             <Text
               maxFontSizeMultiplier={1.6}
-              style={
-                today
-                  ? { fontFamily: fonts.display, fontSize: 13, color: colors.bonnet }
-                  : { fontFamily: fonts.ui500, fontSize: 13, color: colors.cream }
-              }
+              style={{
+                fontFamily: isToday || isSelected ? fonts.display : fonts.ui500,
+                fontSize: 13,
+                color: isSelected
+                  ? colors.bonnetInk
+                  : isToday
+                    ? colors.bonnet
+                    : colors.cream,
+              }}
             >
-              {dates[i]}
+              {Number(date.slice(8, 10))}
             </Text>
-          </View>
+          </PressableScale>
         );
       })}
     </View>

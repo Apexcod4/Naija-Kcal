@@ -88,6 +88,8 @@ export type Dish = {
   colour: string;
   photoUri?: string;
   ingredients?: string;
+  /** Other names people use for this dish — regional, Pidgin, or colloquial. */
+  aliases?: string[];
   /** Dish ids commonly eaten with this one — how a pair is built by hand. */
   pairsWith?: string[];
   /**

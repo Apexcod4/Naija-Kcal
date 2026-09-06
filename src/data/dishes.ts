@@ -22,6 +22,7 @@ export const DISHES: Dish[] = [
   // ---- Soups (per 180 ml ladle) — kcal from the design's "ALL SOUPS" list
   {
     id: 'egusi',
+    aliases: ['egwusi', 'melon soup', 'eguzi', 'egushi'],
     name: 'Egusi',
     category: 'soup',
     unit: 'ladle',
@@ -34,6 +35,7 @@ export const DISHES: Dish[] = [
   },
   {
     id: 'efo-riro',
+    aliases: ['efo', 'efo riro'],
     name: 'Efo riro',
     category: 'soup',
     unit: 'ladle',
@@ -46,6 +48,7 @@ export const DISHES: Dish[] = [
   },
   {
     id: 'ogbono',
+    aliases: ['draw soup', 'apon'],
     name: 'Ogbono',
     category: 'soup',
     unit: 'ladle',
@@ -58,6 +61,7 @@ export const DISHES: Dish[] = [
   },
   {
     id: 'ewedu-gbegiri',
+    aliases: ['abula', 'ewedu', 'gbegiri'],
     name: 'Ewedu & gbegiri',
     category: 'soup',
     unit: 'ladle',
@@ -70,6 +74,7 @@ export const DISHES: Dish[] = [
   },
   {
     id: 'banga',
+    aliases: ['ofe akwu'],
     name: 'Banga',
     category: 'soup',
     unit: 'ladle',
@@ -82,6 +87,7 @@ export const DISHES: Dish[] = [
   },
   {
     id: 'okra',
+    aliases: ['okro', 'ila'],
     name: 'Okra',
     category: 'soup',
     unit: 'ladle',
@@ -106,6 +112,7 @@ export const DISHES: Dish[] = [
   },
   {
     id: 'afang',
+    aliases: ['edikaikong', 'edikang ikong', 'ekpang'],
     name: 'Afang',
     category: 'soup',
     unit: 'ladle',
@@ -121,6 +128,7 @@ export const DISHES: Dish[] = [
   // per-wrap swallow figure of 320 kcal / 72C / 4P / 1F.
   {
     id: 'pounded-yam',
+    aliases: ['iyan', 'poundo'],
     name: 'Pounded yam',
     category: 'swallow',
     unit: 'wrap',
@@ -133,6 +141,7 @@ export const DISHES: Dish[] = [
   },
   {
     id: 'eba',
+    aliases: ['garri', 'gari'],
     name: 'Eba',
     category: 'swallow',
     unit: 'wrap',
@@ -145,6 +154,7 @@ export const DISHES: Dish[] = [
   },
   {
     id: 'fufu',
+    aliases: ['akpu', 'santana'],
     name: 'Fufu',
     category: 'swallow',
     unit: 'wrap',
@@ -157,6 +167,7 @@ export const DISHES: Dish[] = [
   },
   {
     id: 'semo',
+    aliases: ['semovita', 'semolina'],
     name: 'Semo',
     category: 'swallow',
     unit: 'wrap',
@@ -169,6 +180,7 @@ export const DISHES: Dish[] = [
   },
   {
     id: 'amala',
+    aliases: ['elubo'],
     name: 'Amala',
     category: 'swallow',
     unit: 'wrap',
@@ -183,6 +195,7 @@ export const DISHES: Dish[] = [
   // ---- Rice (per derica)
   {
     id: 'jollof',
+    aliases: ['jollof'],
     name: 'Jollof rice',
     category: 'rice',
     unit: 'derica',
@@ -273,6 +286,7 @@ export const DISHES: Dish[] = [
   },
   {
     id: 'moi-moi',
+    aliases: ['moin moin', 'moimoi'],
     name: 'Moi moi',
     category: 'street',
     unit: 'piece',

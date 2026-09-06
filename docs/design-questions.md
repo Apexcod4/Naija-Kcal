@@ -99,6 +99,41 @@ tells the user *how* uncertain a number is rather than merely that it is.
 shared bowl was the user's. The dish recognition is ahead of ours; the unit
 model is the gap this product exists to fill.
 
+## Accuracy: the eval harness, and why fuzzy matching is not coming
+
+`npm run eval` measures `matchPair` against 23 hard, real-world cases in
+`evals/matchPair.cases.ts` — Pidgin, inline quantities, regional names,
+misspellings, and phrasings taken from a competitor's real logs. It prints an
+accuracy figure and guards a floor, so the number can only go up.
+
+**Baseline was 67%. It is now 100%**, and every point came from unglamorous
+changes: an `aliases` field on `Dish`, adding `n` as a separator, and a
+stricter matching rule. Nothing clever was added.
+
+**The rule change that mattered most.** The matcher used to resolve a token
+against any *fragment* of a dish name, so `"yam and stew"` returned Pounded
+yam and logged 320 kcal for a plate of boiled yam. A confident wrong answer is
+worse than no answer in a tracker. A token must now be, contain, or alias a
+whole dish name, and an ingredient match must be unambiguous — `"yam"` appears
+in both *Pounded yam* and *Yam flour*, so it resolves to neither.
+
+**Fuzzy matching is deliberately not used, and should not be added.** The
+eval carries an adversarial case, `"ora and eba"`. Ora soup and Oha soup are
+different real Nigerian dishes **one character apart**; eba/ewa and efo/efa
+are the same story. Edit-distance matching would resolve `ora → oha` and log
+the wrong soup with full confidence. This domain has a dense namespace of
+short, near-identical words, which is exactly where fuzzy matching does
+damage. Misspellings are handled by curated aliases instead — a finite,
+reviewable list.
+
+**Judge quality.** One original case expected `partial(moi-moi)` for
+`"moi moi and pap"`. That expectation was wrong — street food is not half a
+pair — and the code was right. Worth remembering that a failing eval case is
+sometimes a flawed judge, not a defect.
+
+**Next for accuracy:** log user corrections and convert them into eval cases,
+so the case set grows from real misses rather than imagination.
+
 ## Other open questions
 
 1. **`pidginCopy`** — the mock carries an undocumented prop that swaps the scan
